@@ -1,3 +1,6 @@
+import '/auth/base_auth_user_provider.dart';
+import '/auth/supabase_auth/auth_util.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,6 +17,8 @@ class NavbarModel extends FlutterFlowModel<NavbarWidget> {
   FocusNode? searchBarFocusNode;
   TextEditingController? searchBarTextController;
   String? Function(BuildContext, String?)? searchBarTextControllerValidator;
+  // Stores action output result for [Backend Call - Query Rows] action in IconButton widget.
+  List<CartsRow>? userCartItems;
 
   @override
   void initState(BuildContext context) {}

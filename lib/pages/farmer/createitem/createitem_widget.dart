@@ -1,5 +1,6 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/thank_you_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -56,6 +57,8 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -63,30 +66,9 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
-          title: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Add Item',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Text(
-                'Fill out the information below to post a product',
-                style: FlutterFlowTheme.of(context).labelMedium.override(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-              ),
-            ].divide(SizedBox(height: 4.0)),
-          ),
           actions: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
@@ -154,9 +136,45 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1.0, 0.0),
+                                          child: Text(
+                                            'Post an item',
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleMedium
+                                                .override(
+                                                  fontFamily: 'Roboto Mono',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1.0, 0.0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 10.0),
+                                            child: Text(
+                                              'Fill out the information below to post a product.',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Roboto Mono',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
                                         Container(
                                           width: double.infinity,
-                                          height: 330.0,
+                                          height: 196.7,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBackground,
@@ -168,13 +186,19 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                       .alternate,
                                             ),
                                           ),
+                                          child: Icon(
+                                            Icons.drive_folder_upload,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 40.0,
+                                          ),
                                         ),
                                         FFButtonWidget(
                                           onPressed: () async {
                                             logFirebaseEvent(
-                                                'CREATEITEM_PAGE_BUTTON_BTN_ON_TAP');
+                                                'CREATEITEM_PAGE_Upload_ON_TAP');
                                             logFirebaseEvent(
-                                                'Button_store_media_for_upload');
+                                                'Upload_store_media_for_upload');
                                             final selectedMedia =
                                                 await selectMediaWithSourceBottomSheet(
                                               context: context,
@@ -227,8 +251,9 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               }
                                             }
                                           },
-                                          text: 'Button',
+                                          text: 'Upload',
                                           options: FFButtonOptions(
+                                            width: double.infinity,
                                             height: 40.0,
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -242,13 +267,27 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                 FlutterFlowTheme.of(context)
                                                     .titleSmall
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       color: Colors.white,
                                                       letterSpacing: 0.0,
                                                     ),
                                             elevation: 0.0,
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1.0, 0.0),
+                                          child: Text(
+                                            'Product Name',
+                                            style: FlutterFlowTheme.of(context)
+                                                .labelMedium
+                                                .override(
+                                                  fontFamily: 'Roboto Mono',
+                                                  color: Colors.black,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           ),
                                         ),
                                         TextFormField(
@@ -261,30 +300,28 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               TextCapitalization.words,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Product name...',
+                                            labelText: 'Red Delicious Apples',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .headlineMedium
+                                                    .labelSmall
                                                     .override(
-                                                      fontFamily: 'Inter',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
+                                                      fontFamily: 'Roboto Mono',
                                                       letterSpacing: 0.0,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                     ),
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       letterSpacing: 0.0,
                                                     ),
                                             errorStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -342,9 +379,11 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                     16.0, 20.0, 16.0, 20.0),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .headlineMedium
+                                              .labelLarge
                                               .override(
-                                                fontFamily: 'Inter',
+                                                fontFamily: 'Roboto Mono',
+                                                color: Colors.black,
+                                                fontSize: 14.0,
                                                 letterSpacing: 0.0,
                                               ),
                                           cursorColor:
@@ -353,6 +392,20 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                           validator: _model
                                               .productNameTextControllerValidator
                                               .asValidator(context),
+                                        ),
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1.0, 0.0),
+                                          child: Text(
+                                            'Description',
+                                            style: FlutterFlowTheme.of(context)
+                                                .labelMedium
+                                                .override(
+                                                  fontFamily: 'Roboto Mono',
+                                                  color: Colors.black,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
                                         ),
                                         TextFormField(
                                           controller:
@@ -364,27 +417,33 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               TextCapitalization.words,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Description...',
+                                            labelText:
+                                                'Hand-picked from our latest harvest...',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelLarge
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
+                                                      fontSize: 12.0,
                                                       letterSpacing: 0.0,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                     ),
                                             alignLabelWithHint: true,
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .labelMedium
+                                                    .labelSmall
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       letterSpacing: 0.0,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                     ),
                                             errorStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -442,9 +501,9 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                     16.0, 16.0, 16.0, 16.0),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
+                                              .labelLarge
                                               .override(
-                                                fontFamily: 'Inter',
+                                                fontFamily: 'Roboto Mono',
                                                 letterSpacing: 0.0,
                                               ),
                                           maxLines: 9,
@@ -474,51 +533,64 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
-                                                fontFamily: 'Inter',
+                                                fontFamily: 'Roboto Mono',
+                                                color: Colors.black,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
-                                        FlutterFlowDropDown<String>(
-                                          controller: _model
-                                                  .dropDownValueController ??=
-                                              FormFieldController<String>(null),
-                                          options: [
-                                            'Apple',
-                                            'Potato',
-                                            'Tomato'
-                                          ],
-                                          onChanged: (val) => safeSetState(
-                                              () => _model.dropDownValue = val),
-                                          width: 200.0,
-                                          height: 40.0,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Inter',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          hintText: 'Select...',
-                                          icon: Icon(
-                                            Icons.keyboard_arrow_down_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            size: 24.0,
-                                          ),
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                          elevation: 2.0,
-                                          borderColor: Colors.transparent,
-                                          borderWidth: 0.0,
-                                          borderRadius: 8.0,
-                                          margin:
+                                        Padding(
+                                          padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 12.0, 0.0),
-                                          hidesUnderline: true,
-                                          isOverButton: false,
-                                          isSearchable: false,
-                                          isMultiSelect: false,
+                                                  0.0, 0.0, 0.0, 10.0),
+                                          child: FlutterFlowDropDown<String>(
+                                            controller: _model
+                                                    .dropDownValueController ??=
+                                                FormFieldController<String>(
+                                                    null),
+                                            options: [
+                                              'Apple',
+                                              'Potato',
+                                              'Tomato'
+                                            ],
+                                            onChanged: (val) => safeSetState(
+                                                () =>
+                                                    _model.dropDownValue = val),
+                                            width: 200.0,
+                                            height: 40.0,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Roboto Mono',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            hintText: 'Select...',
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 24.0,
+                                            ),
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                            elevation: 2.0,
+                                            borderColor: Colors.transparent,
+                                            borderWidth: 0.0,
+                                            borderRadius: 8.0,
+                                            margin:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 0.0, 12.0, 0.0),
+                                            hidesUnderline: true,
+                                            isOverButton: false,
+                                            isSearchable: false,
+                                            isMultiSelect: false,
+                                          ),
                                         ),
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -535,7 +607,9 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                             context)
                                                         .labelMedium
                                                         .override(
-                                                          fontFamily: 'Inter',
+                                                          fontFamily:
+                                                              'Roboto Mono',
+                                                          color: Colors.black,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -550,16 +624,20 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                             .words,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
-                                                      labelText: '\$50.00',
+                                                      labelText: '\$',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .labelLarge
                                                               .override(
                                                                 fontFamily:
-                                                                    'Inter',
+                                                                    'Roboto Mono',
+                                                                fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .italic,
                                                               ),
                                                       alignLabelWithHint: true,
                                                       hintStyle:
@@ -568,7 +646,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                               .labelMedium
                                                               .override(
                                                                 fontFamily:
-                                                                    'Inter',
+                                                                    'Roboto Mono',
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
@@ -578,7 +656,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                               .bodyMedium
                                                               .override(
                                                                 fontFamily:
-                                                                    'Inter',
+                                                                    'Roboto Mono',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .error,
@@ -650,7 +728,9 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                             context)
                                                         .bodyLarge
                                                         .override(
-                                                          fontFamily: 'Inter',
+                                                          fontFamily:
+                                                              'Roboto Mono',
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                     minLines: 1,
@@ -698,7 +778,8 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .titleSmall
                                                         .override(
-                                                          fontFamily: 'Inter',
+                                                          fontFamily:
+                                                              'Roboto Mono',
                                                           color: Colors.white,
                                                           letterSpacing: 0.0,
                                                         ),
@@ -717,7 +798,8 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
-                                                fontFamily: 'Inter',
+                                                fontFamily: 'Roboto Mono',
+                                                color: Colors.black,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
@@ -730,27 +812,32 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               TextCapitalization.words,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: '\$50.00',
+                                            labelText: 'kg',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelLarge
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       letterSpacing: 0.0,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                     ),
                                             alignLabelWithHint: true,
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
+                                                      fontSize: 14.0,
                                                       letterSpacing: 0.0,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                     ),
                                             errorStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -810,7 +897,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyLarge
                                               .override(
-                                                fontFamily: 'Inter',
+                                                fontFamily: 'Roboto Mono',
                                                 letterSpacing: 0.0,
                                               ),
                                           minLines: 1,
@@ -843,84 +930,124 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                       maxWidth: 770.0,
                     ),
                     decoration: BoxDecoration(),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 12.0, 16.0, 12.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'CREATEITEM_PAGE_ADD_ITEM_BTN_ON_TAP');
-                          logFirebaseEvent('Button_upload_media_to_supabase');
-                          {
-                            safeSetState(() => _model.isDataUploading2 = true);
-                            var selectedUploadedFiles = <FFUploadedFile>[];
-                            var selectedMedia = <SelectedFile>[];
-                            var downloadUrls = <String>[];
-                            try {
-                              selectedUploadedFiles =
-                                  _model.uploadedLocalFile1.bytes!.isNotEmpty
-                                      ? [_model.uploadedLocalFile1]
-                                      : <FFUploadedFile>[];
-                              selectedMedia = selectedFilesFromUploadedFiles(
-                                selectedUploadedFiles,
-                                storageFolderPath: 'products/images',
-                              );
-                              downloadUrls = await uploadSupabaseStorageFiles(
-                                bucketName: 'images',
-                                selectedFiles: selectedMedia,
-                              );
-                            } finally {
-                              _model.isDataUploading2 = false;
-                            }
-                            if (selectedUploadedFiles.length ==
-                                    selectedMedia.length &&
-                                downloadUrls.length == selectedMedia.length) {
-                              safeSetState(() {
-                                _model.uploadedLocalFile2 =
-                                    selectedUploadedFiles.first;
-                                _model.uploadedFileUrl2 = downloadUrls.first;
-                              });
-                            } else {
-                              safeSetState(() {});
-                              return;
-                            }
-                          }
+                    child: Builder(
+                      builder: (context) => Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 12.0, 16.0, 12.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'CREATEITEM_PAGE_ADD_ITEM_BTN_ON_TAP');
+                            logFirebaseEvent('Button_upload_media_to_supabase');
+                            final selectedMedia =
+                                await selectMediaWithSourceBottomSheet(
+                              context: context,
+                              storageFolderPath: 'products/image',
+                              allowPhoto: true,
+                            );
+                            if (selectedMedia != null &&
+                                selectedMedia.every((m) => validateFileFormat(
+                                    m.storagePath, context))) {
+                              safeSetState(
+                                  () => _model.isDataUploading2 = true);
+                              var selectedUploadedFiles = <FFUploadedFile>[];
 
-                          logFirebaseEvent('Button_backend_call');
-                          await ProductsTable().insert({
-                            'seller_id': currentUserUid,
-                            'name': _model.productNameTextController.text,
-                            'description':
-                                _model.descriptionTextController.text,
-                            'price': double.tryParse(
-                                _model.salesPriceTextController.text),
-                            'category': _model.dropDownValue,
-                            'stock':
-                                int.tryParse(_model.stockTextController.text),
-                            'images': '',
-                          });
-                        },
-                        text: 'Add item',
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 48.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Inter',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
+                              var downloadUrls = <String>[];
+                              try {
+                                selectedUploadedFiles = selectedMedia
+                                    .map((m) => FFUploadedFile(
+                                          name: m.storagePath.split('/').last,
+                                          bytes: m.bytes,
+                                          height: m.dimensions?.height,
+                                          width: m.dimensions?.width,
+                                          blurHash: m.blurHash,
+                                        ))
+                                    .toList();
+
+                                downloadUrls = await uploadSupabaseStorageFiles(
+                                  bucketName: 'images',
+                                  selectedFiles: selectedMedia,
+                                );
+                              } finally {
+                                _model.isDataUploading2 = false;
+                              }
+                              if (selectedUploadedFiles.length ==
+                                      selectedMedia.length &&
+                                  downloadUrls.length == selectedMedia.length) {
+                                safeSetState(() {
+                                  _model.uploadedLocalFile2 =
+                                      selectedUploadedFiles.first;
+                                  _model.uploadedFileUrl2 = downloadUrls.first;
+                                });
+                              } else {
+                                safeSetState(() {});
+                                return;
+                              }
+                            }
+
+                            logFirebaseEvent('Button_backend_call');
+                            await ProductsTable().insert({
+                              'seller_id': currentUserUid,
+                              'name': _model.productNameTextController.text,
+                              'description':
+                                  _model.descriptionTextController.text,
+                              'price': double.tryParse(
+                                  _model.salesPriceTextController.text),
+                              'category': _model.dropDownValue,
+                              'stock':
+                                  int.tryParse(_model.stockTextController.text),
+                              'location': FFAppState().userLoc,
+                              'image': _model.uploadedFileUrl2,
+                            });
+                            logFirebaseEvent('Button_alert_dialog');
+                            await showDialog(
+                              context: context,
+                              builder: (dialogContext) {
+                                return Dialog(
+                                  elevation: 0,
+                                  insetPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.transparent,
+                                  alignment: AlignmentDirectional(0.0, 0.0)
+                                      .resolve(Directionality.of(context)),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      FocusScope.of(dialogContext).unfocus();
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                    },
+                                    child: ThankYouWidget(
+                                      amount: double.tryParse(
+                                          _model.stockTextController.text),
+                                      ratio: 4.0,
+                                    ),
                                   ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                                );
+                              },
+                            );
+                          },
+                          text: 'Add item',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 48.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Roboto Mono',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ),

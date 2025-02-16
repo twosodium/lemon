@@ -14,9 +14,6 @@ class UsersRow extends SupabaseDataRow {
   @override
   SupabaseTable get table => UsersTable();
 
-  DateTime get createdAt => getField<DateTime>('created_at')!;
-  set createdAt(DateTime value) => setField<DateTime>('created_at', value);
-
   String? get email => getField<String>('email');
   set email(String? value) => setField<String>('email', value);
 
@@ -34,4 +31,7 @@ class UsersRow extends SupabaseDataRow {
 
   String? get location => getField<String>('location');
   set location(String? value) => setField<String>('location', value);
+
+  List<String> get produce => getListField<String>('produce');
+  set produce(List<String>? value) => setListField<String>('produce', value);
 }

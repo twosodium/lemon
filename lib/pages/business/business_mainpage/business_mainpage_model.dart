@@ -1,12 +1,12 @@
 import '/backend/supabase/supabase.dart';
+import '/components/navbar_widget.dart';
+import '/components/product_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'dart:ui';
-import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'business_mainpage_widget.dart' show BusinessMainpageWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +19,8 @@ class BusinessMainpageModel extends FlutterFlowModel<BusinessMainpageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Model for navbar component.
+  late NavbarModel navbarModel;
   // State field(s) for ChoiceChips widget.
   FormFieldController<List<String>>? choiceChipsValueController;
   String? get choiceChipsValue =>
@@ -28,8 +30,12 @@ class BusinessMainpageModel extends FlutterFlowModel<BusinessMainpageWidget> {
   Stream<List<ProductsRow>>? gridViewSupabaseStream;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    navbarModel = createModel(context, () => NavbarModel());
+  }
 
   @override
-  void dispose() {}
+  void dispose() {
+    navbarModel.dispose();
+  }
 }

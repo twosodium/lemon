@@ -107,45 +107,47 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => PublicWidget(),
             ),
             FFRoute(
-              name: 'ProductDetails',
+              name: 'productDetails',
               path: 'productplaceholder',
               requireAuth: true,
-              builder: (context, params) => ProductDetailsWidget(),
-            ),
-            FFRoute(
-              name: 'Profile',
-              path: 'profile',
-              requireAuth: true,
-              builder: (context, params) => ProfileWidget(),
-            ),
-            FFRoute(
-              name: 'EditProfile',
-              path: 'edit-profile',
-              requireAuth: true,
-              builder: (context, params) => EditProfileWidget(),
-            ),
-            FFRoute(
-              name: 'AboutUs',
-              path: 'about-us',
-              requireAuth: true,
-              builder: (context, params) => AboutUsWidget(),
-            ),
-            FFRoute(
-              name: 'SupportCenter',
-              path: 'support-center',
-              requireAuth: true,
-              builder: (context, params) => SupportCenterWidget(),
-            ),
-            FFRoute(
-              name: 'EditPreferences',
-              path: 'edit-preferences',
-              requireAuth: true,
-              builder: (context, params) => EditPreferencesWidget(
-                page: params.getParam(
-                  'page',
+              builder: (context, params) => ProductDetailsWidget(
+                productName: params.getParam(
+                  'productName',
+                  ParamType.String,
+                ),
+                farmerIntro: params.getParam(
+                  'farmerIntro',
+                  ParamType.String,
+                ),
+                productPrice: params.getParam(
+                  'productPrice',
+                  ParamType.double,
+                ),
+                farmerId: params.getParam(
+                  'farmerId',
+                  ParamType.String,
+                ),
+                productImage: params.getParam(
+                  'productImage',
+                  ParamType.String,
+                ),
+                productId: params.getParam(
+                  'productId',
                   ParamType.int,
                 ),
               ),
+            ),
+            FFRoute(
+              name: 'UpdateProfile_customer',
+              path: 'edit-profile',
+              requireAuth: true,
+              builder: (context, params) => UpdateProfileCustomerWidget(),
+            ),
+            FFRoute(
+              name: 'AboutUs',
+              path: 'About',
+              requireAuth: true,
+              builder: (context, params) => AboutUsWidget(),
             ),
             FFRoute(
               name: 'farmer_mainpage',
@@ -175,20 +177,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'load',
               path: 'load',
-              builder: (context, params) => LoadWidget(
-                userID: params.getParam(
-                  'userID',
-                  ParamType.String,
+              builder: (context, params) => LoadWidget(),
+            ),
+            FFRoute(
+              name: 'searchResults',
+              path: 'searchResults',
+              builder: (context, params) => SearchResultsWidget(
+                priceFilter: params.getParam(
+                  'priceFilter',
+                  ParamType.double,
                 ),
-                userEmail: params.getParam(
-                  'userEmail',
+                categoryFilter: params.getParam<String>(
+                  'categoryFilter',
                   ParamType.String,
+                  isList: true,
                 ),
-                userType: params.getParam(
-                  'userType',
+                nameFilter: params.getParam(
+                  'nameFilter',
                   ParamType.String,
                 ),
               ),
+            ),
+            FFRoute(
+              name: 'cart',
+              path: 'cart',
+              builder: (context, params) => CartWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

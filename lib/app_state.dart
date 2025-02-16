@@ -21,8 +21,8 @@ class FFAppState extends ChangeNotifier {
   Future initializePersistedState() async {
     secureStorage = FlutterSecureStorage();
     await _safeInitAsync(() async {
-      _currentSellerId = await secureStorage.getString('ff_currentSellerId') ??
-          _currentSellerId;
+      _accountType =
+          await secureStorage.getString('ff_accountType') ?? _accountType;
     });
   }
 
@@ -33,15 +33,39 @@ class FFAppState extends ChangeNotifier {
 
   late FlutterSecureStorage secureStorage;
 
-  String _currentSellerId = '';
-  String get currentSellerId => _currentSellerId;
-  set currentSellerId(String value) {
-    _currentSellerId = value;
-    secureStorage.setString('ff_currentSellerId', value);
+  String _accountType = '';
+  String get accountType => _accountType;
+  set accountType(String value) {
+    _accountType = value;
+    secureStorage.setString('ff_accountType', value);
   }
 
-  void deleteCurrentSellerId() {
-    secureStorage.delete(key: 'ff_currentSellerId');
+  void deleteAccountType() {
+    secureStorage.delete(key: 'ff_accountType');
+  }
+
+  double _carbonEmissions = 0.0;
+  double get carbonEmissions => _carbonEmissions;
+  set carbonEmissions(double value) {
+    _carbonEmissions = value;
+  }
+
+  String _userLoc = '';
+  String get userLoc => _userLoc;
+  set userLoc(String value) {
+    _userLoc = value;
+  }
+
+  String _higlightText = '';
+  String get higlightText => _higlightText;
+  set higlightText(String value) {
+    _higlightText = value;
+  }
+
+  String _highlightBusiness = '';
+  String get highlightBusiness => _highlightBusiness;
+  set highlightBusiness(String value) {
+    _highlightBusiness = value;
   }
 }
 

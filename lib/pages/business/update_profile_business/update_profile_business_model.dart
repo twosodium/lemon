@@ -1,4 +1,7 @@
+import '/auth/supabase_auth/auth_util.dart';
+import '/backend/supabase/supabase.dart';
 import '/components/custom_appbar_widget.dart';
+import '/componentsdefault/title_with_subtitle/title_with_subtitle_widget.dart';
 import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -30,14 +33,17 @@ class UpdateProfileBusinessModel
     return null;
   }
 
+  // State field(s) for emailentry widget.
+  FocusNode? emailentryFocusNode;
+  TextEditingController? emailentryTextController;
+  String? Function(BuildContext, String?)? emailentryTextControllerValidator;
   // State field(s) for PlacePicker widget.
   FFPlace placePickerValue = FFPlace();
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode;
-  TextEditingController? emailAddressTextController;
-  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
-  String? _emailAddressTextControllerValidator(
-      BuildContext context, String? val) {
+  // State field(s) for intro widget.
+  FocusNode? introFocusNode;
+  TextEditingController? introTextController;
+  String? Function(BuildContext, String?)? introTextControllerValidator;
+  String? _introTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Email is required.';
     }
@@ -48,11 +54,20 @@ class UpdateProfileBusinessModel
     return null;
   }
 
+  // Model for titleWithSubtitle component.
+  late TitleWithSubtitleModel titleWithSubtitleModel1;
+  // Model for titleWithSubtitle component.
+  late TitleWithSubtitleModel titleWithSubtitleModel2;
+
   @override
   void initState(BuildContext context) {
     customAppbarModel = createModel(context, () => CustomAppbarModel());
     fullNameTextControllerValidator = _fullNameTextControllerValidator;
-    emailAddressTextControllerValidator = _emailAddressTextControllerValidator;
+    introTextControllerValidator = _introTextControllerValidator;
+    titleWithSubtitleModel1 =
+        createModel(context, () => TitleWithSubtitleModel());
+    titleWithSubtitleModel2 =
+        createModel(context, () => TitleWithSubtitleModel());
   }
 
   @override
@@ -61,7 +76,13 @@ class UpdateProfileBusinessModel
     fullNameFocusNode?.dispose();
     fullNameTextController?.dispose();
 
-    emailAddressFocusNode?.dispose();
-    emailAddressTextController?.dispose();
+    emailentryFocusNode?.dispose();
+    emailentryTextController?.dispose();
+
+    introFocusNode?.dispose();
+    introTextController?.dispose();
+
+    titleWithSubtitleModel1.dispose();
+    titleWithSubtitleModel2.dispose();
   }
 }

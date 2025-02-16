@@ -1,10 +1,15 @@
+import '/backend/supabase/supabase.dart';
+import '/components/popup_farmercontact_widget.dart';
 import '/flutter_flow/flutter_flow_count_controller.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/place.dart';
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -53,30 +58,10 @@ class _RequestWidgetState extends State<RequestWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          title: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Find a producer',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Text(
-                'Fill out the form to find a producer to order in bulk.',
-                style: FlutterFlowTheme.of(context).labelMedium.override(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-              ),
-            ].divide(SizedBox(height: 4.0)),
-          ),
           actions: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
@@ -130,12 +115,34 @@ class _RequestWidgetState extends State<RequestWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 2.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Find a producer',
+                                      style: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .override(
+                                            fontFamily: 'Roboto Mono',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Fill out the form to find a producer to order in bulk.',
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Roboto Mono',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
                                   Text(
                                     'What do you need?',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Inter',
+                                          fontFamily: 'Roboto Mono',
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -151,7 +158,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Inter',
+                                          fontFamily: 'Roboto Mono',
                                           letterSpacing: 0.0,
                                         ),
                                     hintText: 'Select...',
@@ -179,7 +186,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Inter',
+                                          fontFamily: 'Roboto Mono',
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -216,7 +223,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .titleLarge
                                             .override(
-                                              fontFamily: 'Inter',
+                                              fontFamily: 'Roboto Mono',
                                               letterSpacing: 0.0,
                                             ),
                                       ),
@@ -227,6 +234,41 @@ class _RequestWidgetState extends State<RequestWidget> {
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 0.0, 12.0, 0.0),
+                                    ),
+                                  ),
+                                  FlutterFlowPlacePicker(
+                                    iOSGoogleMapsApiKey: '',
+                                    androidGoogleMapsApiKey: '',
+                                    webGoogleMapsApiKey: '',
+                                    onSelect: (place) async {
+                                      safeSetState(() =>
+                                          _model.placePickerValue = place);
+                                    },
+                                    defaultText: 'Select Location',
+                                    icon: Icon(
+                                      Icons.place,
+                                      color: FlutterFlowTheme.of(context).info,
+                                      size: 16.0,
+                                    ),
+                                    buttonOptions: FFButtonOptions(
+                                      width: 200.0,
+                                      height: 40.0,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Roboto Mono',
+                                            color: FlutterFlowTheme.of(context)
+                                                .info,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 0.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   TextFormField(
@@ -243,20 +285,20 @@ class _RequestWidgetState extends State<RequestWidget> {
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelLarge
                                           .override(
-                                            fontFamily: 'Inter',
+                                            fontFamily: 'Roboto Mono',
                                             letterSpacing: 0.0,
                                           ),
                                       alignLabelWithHint: true,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            fontFamily: 'Inter',
+                                            fontFamily: 'Roboto Mono',
                                             letterSpacing: 0.0,
                                           ),
                                       errorStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Inter',
+                                            fontFamily: 'Roboto Mono',
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
                                             fontSize: 12.0,
@@ -308,7 +350,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyLarge
                                         .override(
-                                          fontFamily: 'Inter',
+                                          fontFamily: 'Roboto Mono',
                                           letterSpacing: 0.0,
                                         ),
                                     maxLines: 9,
@@ -324,7 +366,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Inter',
+                                          fontFamily: 'Roboto Mono',
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -358,7 +400,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                                                 FlutterFlowTheme.of(context)
                                                     .headlineLarge
                                                     .override(
-                                                      fontFamily: 'Inter',
+                                                      fontFamily: 'Roboto Mono',
                                                       fontSize: 32.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
@@ -434,7 +476,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Inter',
+                                                  fontFamily: 'Roboto Mono',
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
@@ -458,34 +500,83 @@ class _RequestWidgetState extends State<RequestWidget> {
                     maxWidth: 770.0,
                   ),
                   decoration: BoxDecoration(),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
-                    child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
-                      },
-                      text: 'Find a producer',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 48.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            24.0, 0.0, 24.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Inter',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
+                  child: Builder(
+                    builder: (context) => Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          16.0, 12.0, 16.0, 12.0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'REQUEST_PAGE_FIND_A_PRODUCER_BTN_ON_TAP');
+                          logFirebaseEvent('Button_backend_call');
+                          _model.farmers = await UsersTable().queryRows(
+                            queryFn: (q) => q
+                                .eqOrNull(
+                                  'account-type',
+                                  'Producer',
+                                )
+                                .eqOrNull(
+                                  'location',
+                                  _model.placePickerValue.city,
+                                )
+                                .containsOrNull(
+                                  'produce',
+                                  '{${_model.dropDownValue}}',
                                 ),
-                        elevation: 3.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                          );
+                          logFirebaseEvent('Button_alert_dialog');
+                          await showDialog(
+                            context: context,
+                            builder: (dialogContext) {
+                              return Dialog(
+                                elevation: 0,
+                                insetPadding: EdgeInsets.zero,
+                                backgroundColor: Colors.transparent,
+                                alignment: AlignmentDirectional(0.0, 0.0)
+                                    .resolve(Directionality.of(context)),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    FocusScope.of(dialogContext).unfocus();
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  },
+                                  child: PopupFarmercontactWidget(
+                                    farmerName:
+                                        _model.farmers!.firstOrNull!.fullname!,
+                                    farmerIntro:
+                                        _model.farmers!.firstOrNull!.intro!,
+                                    farmerContact:
+                                        _model.farmers!.firstOrNull!.email!,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+
+                          safeSetState(() {});
+                        },
+                        text: 'Find a producer',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 48.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Roboto Mono',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),

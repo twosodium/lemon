@@ -125,8 +125,8 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF86C144);
-  late Color secondary = const Color(0xFF426A20);
+  late Color primary = const Color(0xFFDFCC3A);
+  late Color secondary = const Color(0xFFDFCC3A);
   late Color tertiary = const Color(0xFFD5EEBA);
   late Color alternate = const Color(0xFFE0E3E7);
   late Color primaryText = const Color(0xFF272727);
@@ -181,107 +181,107 @@ class ThemeTypography extends Typography {
 
   final FlutterFlowTheme theme;
 
-  String get displayLargeFamily => 'Inter';
+  String get displayLargeFamily => 'Roboto Mono';
   TextStyle get displayLarge => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 44.0,
       );
-  String get displayMediumFamily => 'Inter';
+  String get displayMediumFamily => 'Roboto Mono';
   TextStyle get displayMedium => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 36.0,
       );
-  String get displaySmallFamily => 'Inter';
+  String get displaySmallFamily => 'Roboto Mono';
   TextStyle get displaySmall => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 32.0,
       );
-  String get headlineLargeFamily => 'Inter';
+  String get headlineLargeFamily => 'Roboto Mono';
   TextStyle get headlineLarge => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 24.0,
       );
-  String get headlineMediumFamily => 'Inter';
+  String get headlineMediumFamily => 'Roboto Mono';
   TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 24.0,
       );
-  String get headlineSmallFamily => 'Inter';
+  String get headlineSmallFamily => 'Roboto Mono';
   TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 22.0,
       );
-  String get titleLargeFamily => 'Inter';
+  String get titleLargeFamily => 'Roboto Mono';
   TextStyle get titleLarge => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
       );
-  String get titleMediumFamily => 'Inter';
+  String get titleMediumFamily => 'Roboto Mono';
   TextStyle get titleMedium => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.info,
         fontWeight: FontWeight.w600,
         fontSize: 18.0,
       );
-  String get titleSmallFamily => 'Inter';
+  String get titleSmallFamily => 'Roboto Mono';
   TextStyle get titleSmall => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.info,
         fontWeight: FontWeight.w600,
         fontSize: 16.0,
       );
-  String get labelLargeFamily => 'Inter';
+  String get labelLargeFamily => 'Roboto Mono';
   TextStyle get labelLarge => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.secondaryText,
         fontWeight: FontWeight.w500,
         fontSize: 14.0,
       );
-  String get labelMediumFamily => 'Inter';
+  String get labelMediumFamily => 'Roboto Mono';
   TextStyle get labelMedium => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.secondaryText,
         fontWeight: FontWeight.w500,
         fontSize: 12.0,
       );
-  String get labelSmallFamily => 'Inter';
+  String get labelSmallFamily => 'Roboto Mono';
   TextStyle get labelSmall => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.secondaryText,
         fontWeight: FontWeight.w500,
         fontSize: 11.0,
       );
-  String get bodyLargeFamily => 'Inter';
+  String get bodyLargeFamily => 'Roboto Mono';
   TextStyle get bodyLarge => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 16.0,
       );
-  String get bodyMediumFamily => 'Inter';
+  String get bodyMediumFamily => 'Roboto Mono';
   TextStyle get bodyMedium => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 14.0,
       );
-  String get bodySmallFamily => 'Inter';
+  String get bodySmallFamily => 'Roboto Mono';
   TextStyle get bodySmall => GoogleFonts.getFont(
-        'Inter',
+        'Roboto Mono',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 14.0,

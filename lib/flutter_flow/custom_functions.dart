@@ -22,3 +22,11 @@ String returnProfileGreeting(DateTime timestamp) {
     return "Goodnight,";
   }
 }
+
+double newCustomFunction(List<double> cartPrices) {
+  double sum = 0;
+  for (var item in cartPrices) {
+    sum += item;
+  }
+  return sum;
+}
