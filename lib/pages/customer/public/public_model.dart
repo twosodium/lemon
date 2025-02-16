@@ -1,4 +1,3 @@
-import '/auth/base_auth_user_provider.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/category_widget.dart';
 import '/components/navbar_widget.dart';

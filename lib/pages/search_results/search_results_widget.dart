@@ -19,11 +19,13 @@ class SearchResultsWidget extends StatefulWidget {
     double? priceFilter,
     this.categoryFilter,
     this.nameFilter,
+    this.seasonFilter,
   }) : this.priceFilter = priceFilter ?? 100000.0;
 
   final double priceFilter;
   final List<String>? categoryFilter;
   final String? nameFilter;
+  final bool? seasonFilter;
 
   @override
   State<SearchResultsWidget> createState() => _SearchResultsWidgetState();
@@ -238,11 +240,11 @@ class _SearchResultsWidgetState extends State<SearchResultsWidget> {
                                           ParamType.String,
                                         ),
                                         'productImage': serializeParam(
-                                          gridViewProductsRow.image,
+                                          '',
                                           ParamType.String,
                                         ),
                                         'productId': serializeParam(
-                                          gridViewProductsRow.id,
+                                          0,
                                           ParamType.int,
                                         ),
                                       }.withoutNulls,

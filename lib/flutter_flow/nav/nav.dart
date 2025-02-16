@@ -93,12 +93,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           routes: [
             FFRoute(
               name: 'SignUp',
-              path: 'sign-in',
+              path: 'sign-up',
               builder: (context, params) => SignUpWidget(),
             ),
             FFRoute(
               name: 'UpdateProfile_farmer',
-              path: 'create-account',
+              path: 'producerProfile',
+              requireAuth: true,
               builder: (context, params) => UpdateProfileFarmerWidget(),
             ),
             FFRoute(
@@ -108,8 +109,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             FFRoute(
               name: 'productDetails',
-              path: 'productplaceholder',
-              requireAuth: true,
+              path: 'productPop',
               builder: (context, params) => ProductDetailsWidget(
                 productName: params.getParam(
                   'productName',
@@ -139,44 +139,50 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             FFRoute(
               name: 'UpdateProfile_customer',
-              path: 'edit-profile',
+              path: 'customerProfile',
               requireAuth: true,
               builder: (context, params) => UpdateProfileCustomerWidget(),
             ),
             FFRoute(
               name: 'AboutUs',
-              path: 'About',
+              path: 'about',
               requireAuth: true,
               builder: (context, params) => AboutUsWidget(),
             ),
             FFRoute(
               name: 'farmer_mainpage',
-              path: 'farmerMainpage',
+              path: 'producerMainpage',
+              requireAuth: true,
               builder: (context, params) => FarmerMainpageWidget(),
             ),
             FFRoute(
               name: 'createitem',
-              path: 'createitem',
+              path: 'producerCreate',
+              requireAuth: true,
               builder: (context, params) => CreateitemWidget(),
             ),
             FFRoute(
               name: 'business_mainpage',
               path: 'businessMainpage',
+              requireAuth: true,
               builder: (context, params) => BusinessMainpageWidget(),
             ),
             FFRoute(
               name: 'UpdateProfile_business',
-              path: 'create-seller',
+              path: 'businessProfile',
+              requireAuth: true,
               builder: (context, params) => UpdateProfileBusinessWidget(),
             ),
             FFRoute(
               name: 'request',
-              path: 'request',
+              path: 'businessRequest',
+              requireAuth: true,
               builder: (context, params) => RequestWidget(),
             ),
             FFRoute(
               name: 'load',
               path: 'load',
+              requireAuth: true,
               builder: (context, params) => LoadWidget(),
             ),
             FFRoute(
@@ -196,12 +202,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'nameFilter',
                   ParamType.String,
                 ),
+                seasonFilter: params.getParam(
+                  'seasonFilter',
+                  ParamType.bool,
+                ),
               ),
             ),
             FFRoute(
               name: 'cart',
-              path: 'cart',
+              path: 'customerCart',
+              requireAuth: true,
               builder: (context, params) => CartWidget(),
+            ),
+            FFRoute(
+              name: 'LogIn',
+              path: 'sign-in',
+              builder: (context, params) => LogInWidget(),
+            ),
+            FFRoute(
+              name: 'payment',
+              path: 'payment',
+              builder: (context, params) => PaymentWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -387,13 +408,10 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/MealPlanner_Rounded.png',
-                      width: 175.0,
-                      fit: BoxFit.cover,
-                    ),
+                  color: Colors.transparent,
+                  child: Image.asset(
+                    'assets/images/Juce--Streamline-Simple-Icons.svg.png',
+                    fit: BoxFit.none,
                   ),
                 )
               : page;

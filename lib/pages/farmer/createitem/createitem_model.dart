@@ -18,9 +18,10 @@ class CreateitemModel extends FlutterFlowModel<CreateitemWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  bool isDataUploading1 = false;
-  FFUploadedFile uploadedLocalFile1 =
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl = '';
 
   // State field(s) for productName widget.
   FocusNode? productNameFocusNode;
@@ -33,6 +34,9 @@ class CreateitemModel extends FlutterFlowModel<CreateitemWidget> {
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
+  // State field(s) for truefalseseason widget.
+  String? truefalseseasonValue;
+  FormFieldController<String>? truefalseseasonValueController;
   // State field(s) for salesPrice widget.
   FocusNode? salesPriceFocusNode;
   TextEditingController? salesPriceTextController;
@@ -41,10 +45,6 @@ class CreateitemModel extends FlutterFlowModel<CreateitemWidget> {
   FocusNode? stockFocusNode;
   TextEditingController? stockTextController;
   String? Function(BuildContext, String?)? stockTextControllerValidator;
-  bool isDataUploading2 = false;
-  FFUploadedFile uploadedLocalFile2 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl2 = '';
 
   @override
   void initState(BuildContext context) {}

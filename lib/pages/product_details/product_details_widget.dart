@@ -77,10 +77,10 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                 children: [
                   Align(
                     alignment: AlignmentDirectional(0.0, -1.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
                       children: [
                         Align(
                           alignment: AlignmentDirectional(0.0, -1.0),
@@ -185,114 +185,233 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                 ),
                           ),
                         ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  25.0, 0.0, 0.0, 0.0),
+                              child: Container(
+                                width: 120.0,
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: FlutterFlowCountController(
+                                  decrementIconBuilder: (enabled) => Icon(
+                                    Icons.remove_rounded,
+                                    color: enabled
+                                        ? FlutterFlowTheme.of(context)
+                                            .secondaryText
+                                        : FlutterFlowTheme.of(context)
+                                            .alternate,
+                                    size: 24.0,
+                                  ),
+                                  incrementIconBuilder: (enabled) => Icon(
+                                    Icons.add_rounded,
+                                    color: enabled
+                                        ? FlutterFlowTheme.of(context).primary
+                                        : FlutterFlowTheme.of(context)
+                                            .alternate,
+                                    size: 24.0,
+                                  ),
+                                  countBuilder: (count) => Text(
+                                    count.toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleLarge
+                                        .override(
+                                          fontFamily: 'Roboto Mono',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  count: _model.countControllerValue ??= 0,
+                                  updateCount: (count) => safeSetState(() =>
+                                      _model.countControllerValue = count),
+                                  stepSize: 1,
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12.0, 0.0, 12.0, 0.0),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(1.0, 0.0),
+                              child: Builder(
+                                builder: (context) => Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      50.0, 0.0, 25.0, 0.0),
+                                  child: FlutterFlowIconButton(
+                                    borderRadius: 8.0,
+                                    buttonSize: 40.0,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).primary,
+                                    icon: Icon(
+                                      Icons.add_shopping_cart,
+                                      color: FlutterFlowTheme.of(context).info,
+                                      size: 24.0,
+                                    ),
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'PRODUCT_DETAILS_PAGE_addToCart_ON_TAP');
+                                      if (loggedIn) {
+                                        logFirebaseEvent(
+                                            'addToCart_backend_call');
+                                        await CartsTable().insert({
+                                          'user_id': currentUserUid,
+                                          'quantity':
+                                              _model.countControllerValue,
+                                          'product_id': widget!.productId,
+                                        });
+                                        logFirebaseEvent(
+                                            'addToCart_alert_dialog');
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(dialogContext)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child: AddetoCartWidget(
+                                                  ratio: 4.0,
+                                                  amount: _model
+                                                      .countControllerValue
+                                                      ?.toDouble(),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        logFirebaseEvent(
+                                            'addToCart_navigate_to');
+
+                                        context.pushNamed('SignUp');
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              25.0, 0.0, 0.0, 0.0),
-                          child: Container(
-                            width: 120.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              borderRadius: BorderRadius.circular(8.0),
-                              shape: BoxShape.rectangle,
+                              20.0, 0.0, 0.0, 20.0),
+                          child: FutureBuilder<List<ProductsRow>>(
+                            future: ProductsTable().queryRows(
+                              queryFn: (q) => q.eqOrNull(
+                                'id',
+                                widget!.productId,
+                              ),
                             ),
-                            child: FlutterFlowCountController(
-                              decrementIconBuilder: (enabled) => Icon(
-                                Icons.remove_rounded,
-                                color: enabled
-                                    ? FlutterFlowTheme.of(context).secondaryText
-                                    : FlutterFlowTheme.of(context).alternate,
-                                size: 24.0,
-                              ),
-                              incrementIconBuilder: (enabled) => Icon(
-                                Icons.add_rounded,
-                                color: enabled
-                                    ? FlutterFlowTheme.of(context).primary
-                                    : FlutterFlowTheme.of(context).alternate,
-                                size: 24.0,
-                              ),
-                              countBuilder: (count) => Text(
-                                count.toString(),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 25.0,
+                                    height: 25.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<ProductsRow> textProductsRowList =
+                                  snapshot.data!;
+
+                              return Text(
+                                textProductsRowList.firstOrNull!.description!,
                                 style: FlutterFlowTheme.of(context)
-                                    .titleLarge
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Roboto Mono',
+                                      letterSpacing: 0.0,
+                                    ),
+                              );
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  25.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'Producer: ',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Roboto Mono',
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                              count: _model.countControllerValue ??= 0,
-                              updateCount: (count) => safeSetState(
-                                  () => _model.countControllerValue = count),
-                              stepSize: 1,
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 12.0, 0.0),
                             ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(1.0, 0.0),
-                          child: Builder(
-                            builder: (context) => Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 25.0, 0.0),
-                              child: FlutterFlowIconButton(
-                                borderRadius: 8.0,
-                                buttonSize: 40.0,
-                                fillColor: FlutterFlowTheme.of(context).primary,
-                                icon: Icon(
-                                  Icons.add_shopping_cart,
-                                  color: FlutterFlowTheme.of(context).info,
-                                  size: 24.0,
+                            FutureBuilder<List<UsersRow>>(
+                              future: UsersTable().querySingleRow(
+                                queryFn: (q) => q.eqOrNull(
+                                  'id',
+                                  widget!.farmerId,
                                 ),
-                                onPressed: () async {
-                                  logFirebaseEvent(
-                                      'PRODUCT_DETAILS_PAGE_addToCart_ON_TAP');
-                                  if (loggedIn) {
-                                    logFirebaseEvent('addToCart_backend_call');
-                                    await CartsTable().insert({
-                                      'user_id': currentUserUid,
-                                      'quantity': _model.countControllerValue,
-                                      'product_id': widget!.productId,
-                                    });
-                                    logFirebaseEvent('addToCart_alert_dialog');
-                                    await showDialog(
-                                      context: context,
-                                      builder: (dialogContext) {
-                                        return Dialog(
-                                          elevation: 0,
-                                          insetPadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
-                                          alignment: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              FocusScope.of(dialogContext)
-                                                  .unfocus();
-                                              FocusManager.instance.primaryFocus
-                                                  ?.unfocus();
-                                            },
-                                            child: AddetoCartWidget(
-                                              ratio: 4.0,
-                                              amount: _model
-                                                  .countControllerValue
-                                                  ?.toDouble(),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    logFirebaseEvent('addToCart_navigate_to');
-
-                                    context.pushNamed('SignUp');
-                                  }
-                                },
                               ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 25.0,
+                                      height: 25.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<UsersRow> textUsersRowList =
+                                    snapshot.data!;
+
+                                final textUsersRow = textUsersRowList.isNotEmpty
+                                    ? textUsersRowList.first
+                                    : null;
+
+                                return Text(
+                                  valueOrDefault<String>(
+                                    textUsersRow?.fullname,
+                                    'Producer',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Roboto Mono',
+                                        letterSpacing: 0.0,
+                                      ),
+                                );
+                              },
                             ),
-                          ),
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(

@@ -14,6 +14,8 @@ class SearchFilterPopupModel extends FlutterFlowModel<SearchFilterPopupWidget> {
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();
+  // State field(s) for Checkbox widget.
+  bool? checkboxValue;
   // State field(s) for DropDown widget.
   List<String>? dropDownValue;
   FormFieldController<List<String>>? dropDownValueController;

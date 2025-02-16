@@ -1,4 +1,3 @@
-import '/auth/base_auth_user_provider.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/category_widget.dart';
 import '/components/navbar_widget.dart';
@@ -40,30 +39,13 @@ class _PublicWidgetState extends State<PublicWidget> {
       _model.facts = await FactsTable().queryRows(
         queryFn: (q) => q,
       );
-      if (loggedIn) {
-        if (FFAppState().userLoc != null && FFAppState().userLoc != '') {
-          logFirebaseEvent('public_backend_call');
-          _model.businessAround = await UsersTable().queryRows(
-            queryFn: (q) => q
-                .eqOrNull(
-                  'account-type',
-                  'Business',
-                )
-                .eqOrNull(
-                  'location',
-                  FFAppState().userLoc,
-                ),
-          );
-          logFirebaseEvent('public_update_app_state');
-          FFAppState().highlightBusiness =
-              _model.businessAround!.firstOrNull!.fullname!;
-          safeSetState(() {});
-          logFirebaseEvent('public_update_app_state');
-          FFAppState().higlightText =
-              'Did you know that${FFAppState().highlightBusiness}helps fight food waste with lemon by collaborating with farmers on Lemon?';
-          safeSetState(() {});
-        }
-      }
+      logFirebaseEvent('public_backend_call');
+      _model.businessAround = await UsersTable().queryRows(
+        queryFn: (q) => q.eqOrNull(
+          'account-type',
+          'Business Customer',
+        ),
+      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -78,8 +60,6 @@ class _PublicWidgetState extends State<PublicWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -238,7 +218,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                         future: ProductsTable().queryRows(
                           queryFn: (q) => q.ltOrNull(
                             'price',
-                            5.0,
+                            3.0,
                           ),
                         ),
                         builder: (context, snapshot) {
@@ -372,9 +352,9 @@ class _PublicWidgetState extends State<PublicWidget> {
                       padding: EdgeInsets.all(14.0),
                       child: FutureBuilder<List<ProductsRow>>(
                         future: ProductsTable().queryRows(
-                          queryFn: (q) => q.ltOrNull(
-                            'price',
-                            5.0,
+                          queryFn: (q) => q.eqOrNull(
+                            'in_season',
+                            true,
                           ),
                         ),
                         builder: (context, snapshot) {
@@ -494,7 +474,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 10.0, 10.0),
                     child: Text(
-                      FFAppState().higlightText,
+                      'Business Spotlight:${_model.businessAround?.elementAtOrNull(random_data.randomInteger(0, _model.businessAround!.length))?.fullname}uses Lemon to collaborate with farmers on Lemon to source its fruits and veggies locally and sustainably.',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Roboto Mono',
                             letterSpacing: 0.0,
@@ -567,7 +547,18 @@ class _PublicWidgetState extends State<PublicWidget> {
                                       'PUBLIC_PAGE_Container_wszjh7fn_ON_TAP');
                                   logFirebaseEvent('category_navigate_to');
 
-                                  context.pushNamed('searchResults');
+                                  context.pushNamed(
+                                    'searchResults',
+                                    queryParameters: {
+                                      'categoryFilter': serializeParam(
+                                        (String var1) {
+                                          return [var1];
+                                        }(gridViewCategoryListRow.category),
+                                        ParamType.String,
+                                        isList: true,
+                                      ),
+                                    }.withoutNulls,
+                                  );
                                 },
                                 child: CategoryWidget(
                                   key: Key(

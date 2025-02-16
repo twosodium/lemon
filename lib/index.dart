@@ -20,3 +20,5 @@ export '/pages/load/load_widget.dart' show LoadWidget;
 export '/pages/search_results/search_results_widget.dart'
     show SearchResultsWidget;
 export '/pages/customer/cart/cart_widget.dart' show CartWidget;
+export '/pages/log_in/log_in_widget.dart' show LogInWidget;
+export '/payment/payment_widget.dart' show PaymentWidget;

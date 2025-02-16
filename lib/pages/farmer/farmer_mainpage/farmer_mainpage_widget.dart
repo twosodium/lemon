@@ -182,8 +182,8 @@ class _FarmerMainpageWidgetState extends State<FarmerMainpageWidget> {
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 16.0,
-                                      mainAxisSpacing: 70.0,
-                                      childAspectRatio: 1.0,
+                                      mainAxisSpacing: 16.0,
+                                      childAspectRatio: 0.6,
                                     ),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
@@ -199,16 +199,73 @@ class _FarmerMainpageWidgetState extends State<FarmerMainpageWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 30.0),
-                                          child: ProductWidget(
-                                            key: Key(
-                                                'Keyrv6_${gridViewIndex}_of_${gridViewProductsRowList.length}'),
-                                            productName:
-                                                gridViewProductsRow.name,
-                                            productPrice:
-                                                gridViewProductsRow.price!,
-                                            productImage:
-                                                gridViewProductsRow.image,
-                                            productId: gridViewProductsRow.id,
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              logFirebaseEvent(
+                                                  'FARMER_MAINContainer_rv6b6x7j_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'product_backend_call');
+                                              _model.farmerInfo =
+                                                  await UsersTable().queryRows(
+                                                queryFn: (q) => q.eqOrNull(
+                                                  'id',
+                                                  gridViewProductsRow.sellerId,
+                                                ),
+                                              );
+                                              logFirebaseEvent(
+                                                  'product_navigate_to');
+
+                                              context.pushNamed(
+                                                'productDetails',
+                                                queryParameters: {
+                                                  'productName': serializeParam(
+                                                    gridViewProductsRow.name,
+                                                    ParamType.String,
+                                                  ),
+                                                  'farmerIntro': serializeParam(
+                                                    _model.farmerInfo
+                                                        ?.firstOrNull?.intro,
+                                                    ParamType.String,
+                                                  ),
+                                                  'productImage':
+                                                      serializeParam(
+                                                    gridViewProductsRow.image,
+                                                    ParamType.String,
+                                                  ),
+                                                  'productPrice':
+                                                      serializeParam(
+                                                    gridViewProductsRow.price,
+                                                    ParamType.double,
+                                                  ),
+                                                  'farmerId': serializeParam(
+                                                    gridViewProductsRow
+                                                        .sellerId,
+                                                    ParamType.String,
+                                                  ),
+                                                  'productId': serializeParam(
+                                                    gridViewProductsRow.id,
+                                                    ParamType.int,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+
+                                              safeSetState(() {});
+                                            },
+                                            child: ProductWidget(
+                                              key: Key(
+                                                  'Keyrv6_${gridViewIndex}_of_${gridViewProductsRowList.length}'),
+                                              productName:
+                                                  gridViewProductsRow.name,
+                                              productPrice:
+                                                  gridViewProductsRow.price!,
+                                              productImage:
+                                                  gridViewProductsRow.image,
+                                              productId: gridViewProductsRow.id,
+                                            ),
                                           ),
                                         ),
                                       );

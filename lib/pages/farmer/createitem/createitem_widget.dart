@@ -198,10 +198,12 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                             logFirebaseEvent(
                                                 'CREATEITEM_PAGE_Upload_ON_TAP');
                                             logFirebaseEvent(
-                                                'Upload_store_media_for_upload');
+                                                'Upload_upload_media_to_supabase');
                                             final selectedMedia =
                                                 await selectMediaWithSourceBottomSheet(
                                               context: context,
+                                              storageFolderPath:
+                                                  'productImages',
                                               allowPhoto: true,
                                             );
                                             if (selectedMedia != null &&
@@ -210,11 +212,17 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                         m.storagePath,
                                                         context))) {
                                               safeSetState(() => _model
-                                                  .isDataUploading1 = true);
+                                                  .isDataUploading = true);
                                               var selectedUploadedFiles =
                                                   <FFUploadedFile>[];
 
+                                              var downloadUrls = <String>[];
                                               try {
+                                                showUploadMessage(
+                                                  context,
+                                                  'Uploading file...',
+                                                  showLoading: true,
+                                                );
                                                 selectedUploadedFiles =
                                                     selectedMedia
                                                         .map((m) =>
@@ -234,19 +242,35 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                                   m.blurHash,
                                                             ))
                                                         .toList();
+
+                                                downloadUrls =
+                                                    await uploadSupabaseStorageFiles(
+                                                  bucketName: 'images',
+                                                  selectedFiles: selectedMedia,
+                                                );
                                               } finally {
-                                                _model.isDataUploading1 = false;
+                                                ScaffoldMessenger.of(context)
+                                                    .hideCurrentSnackBar();
+                                                _model.isDataUploading = false;
                                               }
                                               if (selectedUploadedFiles
-                                                      .length ==
-                                                  selectedMedia.length) {
+                                                          .length ==
+                                                      selectedMedia.length &&
+                                                  downloadUrls.length ==
+                                                      selectedMedia.length) {
                                                 safeSetState(() {
-                                                  _model.uploadedLocalFile1 =
+                                                  _model.uploadedLocalFile =
                                                       selectedUploadedFiles
                                                           .first;
+                                                  _model.uploadedFileUrl =
+                                                      downloadUrls.first;
                                                 });
+                                                showUploadMessage(
+                                                    context, 'Success!');
                                               } else {
                                                 safeSetState(() {});
+                                                showUploadMessage(context,
+                                                    'Failed to upload data');
                                                 return;
                                               }
                                             }
@@ -542,19 +566,113 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 10.0),
+                                          child: FutureBuilder<
+                                              List<CategoryListRow>>(
+                                            future:
+                                                CategoryListTable().queryRows(
+                                              queryFn: (q) => q,
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 25.0,
+                                                    height: 25.0,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<CategoryListRow>
+                                                  dropDownCategoryListRowList =
+                                                  snapshot.data!;
+
+                                              return FlutterFlowDropDown<
+                                                  String>(
+                                                controller: _model
+                                                        .dropDownValueController ??=
+                                                    FormFieldController<String>(
+                                                        null),
+                                                options:
+                                                    dropDownCategoryListRowList
+                                                        .map((e) => e.category)
+                                                        .toList(),
+                                                onChanged: (val) =>
+                                                    safeSetState(() => _model
+                                                        .dropDownValue = val),
+                                                width: 200.0,
+                                                height: 40.0,
+                                                textStyle: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Roboto Mono',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                                hintText: 'Select...',
+                                                icon: Icon(
+                                                  Icons
+                                                      .keyboard_arrow_down_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  size: 24.0,
+                                                ),
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                elevation: 2.0,
+                                                borderColor: Colors.transparent,
+                                                borderWidth: 0.0,
+                                                borderRadius: 8.0,
+                                                margin: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        12.0, 0.0, 12.0, 0.0),
+                                                hidesUnderline: true,
+                                                isOverButton: false,
+                                                isSearchable: false,
+                                                isMultiSelect: false,
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        Text(
+                                          'In season?',
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily: 'Roboto Mono',
+                                                color: Colors.black,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 10.0),
                                           child: FlutterFlowDropDown<String>(
                                             controller: _model
-                                                    .dropDownValueController ??=
+                                                    .truefalseseasonValueController ??=
                                                 FormFieldController<String>(
                                                     null),
-                                            options: [
-                                              'Apple',
-                                              'Potato',
-                                              'Tomato'
-                                            ],
+                                            options: ['True', 'False'],
                                             onChanged: (val) => safeSetState(
-                                                () =>
-                                                    _model.dropDownValue = val),
+                                                () => _model
+                                                        .truefalseseasonValue =
+                                                    val),
                                             width: 200.0,
                                             height: 40.0,
                                             textStyle:
@@ -812,7 +930,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               TextCapitalization.words,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'kg',
+                                            labelText: 'ct',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelLarge
@@ -938,53 +1056,6 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                           onPressed: () async {
                             logFirebaseEvent(
                                 'CREATEITEM_PAGE_ADD_ITEM_BTN_ON_TAP');
-                            logFirebaseEvent('Button_upload_media_to_supabase');
-                            final selectedMedia =
-                                await selectMediaWithSourceBottomSheet(
-                              context: context,
-                              storageFolderPath: 'products/image',
-                              allowPhoto: true,
-                            );
-                            if (selectedMedia != null &&
-                                selectedMedia.every((m) => validateFileFormat(
-                                    m.storagePath, context))) {
-                              safeSetState(
-                                  () => _model.isDataUploading2 = true);
-                              var selectedUploadedFiles = <FFUploadedFile>[];
-
-                              var downloadUrls = <String>[];
-                              try {
-                                selectedUploadedFiles = selectedMedia
-                                    .map((m) => FFUploadedFile(
-                                          name: m.storagePath.split('/').last,
-                                          bytes: m.bytes,
-                                          height: m.dimensions?.height,
-                                          width: m.dimensions?.width,
-                                          blurHash: m.blurHash,
-                                        ))
-                                    .toList();
-
-                                downloadUrls = await uploadSupabaseStorageFiles(
-                                  bucketName: 'images',
-                                  selectedFiles: selectedMedia,
-                                );
-                              } finally {
-                                _model.isDataUploading2 = false;
-                              }
-                              if (selectedUploadedFiles.length ==
-                                      selectedMedia.length &&
-                                  downloadUrls.length == selectedMedia.length) {
-                                safeSetState(() {
-                                  _model.uploadedLocalFile2 =
-                                      selectedUploadedFiles.first;
-                                  _model.uploadedFileUrl2 = downloadUrls.first;
-                                });
-                              } else {
-                                safeSetState(() {});
-                                return;
-                              }
-                            }
-
                             logFirebaseEvent('Button_backend_call');
                             await ProductsTable().insert({
                               'seller_id': currentUserUid,
@@ -997,7 +1068,9 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                               'stock':
                                   int.tryParse(_model.stockTextController.text),
                               'location': FFAppState().userLoc,
-                              'image': _model.uploadedFileUrl2,
+                              'image': _model.uploadedFileUrl,
+                              'in_season':
+                                  _model.truefalseseasonValue == 'True',
                             });
                             logFirebaseEvent('Button_alert_dialog');
                             await showDialog(

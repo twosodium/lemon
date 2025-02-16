@@ -143,6 +143,7 @@ class _CartWidgetState extends State<CartWidget> {
                             producer: listViewCartsRow.producerName!,
                             price: listViewCartsRow.price!,
                             quantity: listViewCartsRow.quantity!,
+                            productId: listViewCartsRow.productId,
                           );
                         },
                       );

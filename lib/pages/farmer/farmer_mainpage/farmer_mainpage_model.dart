@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 class FarmerMainpageModel extends FlutterFlowModel<FarmerMainpageWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - Query Rows] action in product widget.
+  List<UsersRow>? farmerInfo;
   // Model for navbar component.
   late NavbarModel navbarModel;
 

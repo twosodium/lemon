@@ -119,62 +119,90 @@ class _BusinessMainpageWidgetState extends State<BusinessMainpageWidget> {
                                   ),
                             ),
                           ),
-                          FlutterFlowChoiceChips(
-                            options: [
-                              ChipData('Veggies'),
-                              ChipData('Fruits'),
-                              ChipData('Other')
-                            ],
-                            onChanged: (val) async {
-                              safeSetState(() =>
-                                  _model.choiceChipsValue = val?.firstOrNull);
-                              logFirebaseEvent(
-                                  'BUSINESS_MAINChoiceChips_0iwu176w_ON_FOR');
-                              logFirebaseEvent('ChoiceChips_update_page_state');
-                              _model.category = _model.choiceChipsValue!;
-                              safeSetState(() {});
+                          FutureBuilder<List<CategoryListRow>>(
+                            future: CategoryListTable().queryRows(
+                              queryFn: (q) => q,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 25.0,
+                                    height: 25.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<CategoryListRow>
+                                  choiceChipsCategoryListRowList =
+                                  snapshot.data!;
+
+                              return FlutterFlowChoiceChips(
+                                options: choiceChipsCategoryListRowList
+                                    .map((e) => e.category)
+                                    .toList()
+                                    .map((label) => ChipData(label))
+                                    .toList(),
+                                onChanged: (val) async {
+                                  safeSetState(() => _model.choiceChipsValue =
+                                      val?.firstOrNull);
+                                  logFirebaseEvent(
+                                      'BUSINESS_MAINChoiceChips_0iwu176w_ON_FOR');
+                                  logFirebaseEvent(
+                                      'ChoiceChips_update_page_state');
+                                  _model.category = _model.choiceChipsValue!;
+                                  safeSetState(() {});
+                                },
+                                selectedChipStyle: ChipStyle(
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Roboto Mono',
+                                        color:
+                                            FlutterFlowTheme.of(context).info,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  iconColor: FlutterFlowTheme.of(context).info,
+                                  iconSize: 16.0,
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                unselectedChipStyle: ChipStyle(
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Roboto Mono',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  iconColor: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  iconSize: 16.0,
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                chipSpacing: 8.0,
+                                rowSpacing: 8.0,
+                                multiselect: false,
+                                alignment: WrapAlignment.start,
+                                controller:
+                                    _model.choiceChipsValueController ??=
+                                        FormFieldController<List<String>>(
+                                  [],
+                                ),
+                                wrapped: true,
+                              );
                             },
-                            selectedChipStyle: ChipStyle(
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Roboto Mono',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    letterSpacing: 0.0,
-                                  ),
-                              iconColor: FlutterFlowTheme.of(context).info,
-                              iconSize: 16.0,
-                              elevation: 0.0,
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            unselectedChipStyle: ChipStyle(
-                              backgroundColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Roboto Mono',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                  ),
-                              iconColor:
-                                  FlutterFlowTheme.of(context).secondaryText,
-                              iconSize: 16.0,
-                              elevation: 0.0,
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            chipSpacing: 8.0,
-                            rowSpacing: 8.0,
-                            multiselect: false,
-                            alignment: WrapAlignment.start,
-                            controller: _model.choiceChipsValueController ??=
-                                FormFieldController<List<String>>(
-                              [],
-                            ),
-                            wrapped: true,
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -216,8 +244,8 @@ class _BusinessMainpageWidgetState extends State<BusinessMainpageWidget> {
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 16.0,
-                                    mainAxisSpacing: 80.0,
-                                    childAspectRatio: 1.0,
+                                    mainAxisSpacing: 16.0,
+                                    childAspectRatio: 0.7,
                                   ),
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
@@ -227,9 +255,59 @@ class _BusinessMainpageWidgetState extends State<BusinessMainpageWidget> {
                                         gridViewProductsRowList[gridViewIndex];
                                     return Align(
                                       alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 30.0),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          logFirebaseEvent(
+                                              'BUSINESS_MAINContainer_7s10luaa_ON_TAP');
+                                          logFirebaseEvent(
+                                              'product_backend_call');
+                                          _model.farmerInfo =
+                                              await UsersTable().queryRows(
+                                            queryFn: (q) => q.eqOrNull(
+                                              'id',
+                                              gridViewProductsRow.sellerId,
+                                            ),
+                                          );
+                                          logFirebaseEvent(
+                                              'product_navigate_to');
+
+                                          context.pushNamed(
+                                            'productDetails',
+                                            queryParameters: {
+                                              'productName': serializeParam(
+                                                gridViewProductsRow.name,
+                                                ParamType.String,
+                                              ),
+                                              'farmerIntro': serializeParam(
+                                                _model.farmerInfo?.firstOrNull
+                                                    ?.intro,
+                                                ParamType.String,
+                                              ),
+                                              'productImage': serializeParam(
+                                                gridViewProductsRow.image,
+                                                ParamType.String,
+                                              ),
+                                              'productPrice': serializeParam(
+                                                gridViewProductsRow.price,
+                                                ParamType.double,
+                                              ),
+                                              'farmerId': serializeParam(
+                                                gridViewProductsRow.sellerId,
+                                                ParamType.String,
+                                              ),
+                                              'productId': serializeParam(
+                                                gridViewProductsRow.id,
+                                                ParamType.int,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+
+                                          safeSetState(() {});
+                                        },
                                         child: ProductWidget(
                                           key: Key(
                                               'Key7s1_${gridViewIndex}_of_${gridViewProductsRowList.length}'),

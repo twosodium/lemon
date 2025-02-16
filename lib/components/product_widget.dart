@@ -1,6 +1,7 @@
 import '/auth/base_auth_user_provider.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/thank_you_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -96,7 +97,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       topRight: Radius.circular(12.0),
                     ),
                     child: Image.network(
-                      '',
+                      widget!.productImage!,
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       height: MediaQuery.sizeOf(context).height * 1.0,
                       fit: BoxFit.cover,
@@ -110,7 +111,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10.0, 12.0, 12.0, 0.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -152,7 +153,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 0.0, 30.0),
+                              20.0, 0.0, 0.0, 30.0),
                           child: Icon(
                             Icons.shopping_cart,
                             color: FlutterFlowTheme.of(context).primary,
@@ -161,33 +162,58 @@ class _ProductWidgetState extends State<ProductWidget> {
                         ),
                         Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 30.0),
-                            child: FlutterFlowIconButton(
-                              borderRadius: 8.0,
-                              buttonSize: 30.0,
-                              fillColor: FlutterFlowTheme.of(context).primary,
-                              icon: Icon(
-                                Icons.plus_one_sharp,
-                                color: FlutterFlowTheme.of(context).info,
-                                size: 15.0,
+                          child: Builder(
+                            builder: (context) => Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 30.0, 30.0),
+                              child: FlutterFlowIconButton(
+                                borderRadius: 8.0,
+                                buttonSize: 30.0,
+                                fillColor: FlutterFlowTheme.of(context).primary,
+                                icon: Icon(
+                                  Icons.plus_one_sharp,
+                                  color: FlutterFlowTheme.of(context).info,
+                                  size: 15.0,
+                                ),
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'PRODUCT_COMP_plus_one_sharp_ICN_ON_TAP');
+                                  if (loggedIn == true) {
+                                    logFirebaseEvent('IconButton_backend_call');
+                                    await CartsTable().insert({
+                                      'user_id': currentUserUid,
+                                      'product_id': widget!.productId,
+                                      'quantity': 1,
+                                      'price': widget!.productPrice,
+                                      'product_name': widget!.productName,
+                                      'producer_name': '',
+                                    });
+                                    logFirebaseEvent('IconButton_alert_dialog');
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: ThankYouWidget(
+                                            ratio: 4.0,
+                                            amount: 1.0,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    logFirebaseEvent('IconButton_navigate_to');
+
+                                    context.pushNamed('SignUp');
+                                  }
+                                },
                               ),
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'PRODUCT_COMP_plus_one_sharp_ICN_ON_TAP');
-                                if (loggedIn == true) {
-                                  logFirebaseEvent('IconButton_backend_call');
-                                  await CartsTable().insert({
-                                    'user_id': currentUserUid,
-                                    'product_id': widget!.productId,
-                                    'quantity': 1,
-                                    'price': widget!.productPrice,
-                                    'product_name': widget!.productName,
-                                    'producer_name': '',
-                                  });
-                                }
-                              },
                             ),
                           ),
                         ),

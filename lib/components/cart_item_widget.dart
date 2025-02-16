@@ -1,3 +1,6 @@
+import '/auth/supabase_auth/auth_util.dart';
+import '/backend/supabase/supabase.dart';
+import '/flutter_flow/flutter_flow_count_controller.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
@@ -14,12 +17,14 @@ class CartItemWidget extends StatefulWidget {
     required this.producer,
     required this.price,
     required this.quantity,
+    this.productId,
   });
 
   final String? productName;
   final String? producer;
   final double? price;
   final int? quantity;
+  final int? productId;
 
   @override
   State<CartItemWidget> createState() => _CartItemWidgetState();
@@ -122,6 +127,75 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   ),
                 ),
               ),
+              Container(
+                width: 70.0,
+                height: 40.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  borderRadius: BorderRadius.circular(8.0),
+                  shape: BoxShape.rectangle,
+                ),
+                child: FlutterFlowCountController(
+                  decrementIconBuilder: (enabled) => Icon(
+                    Icons.remove_rounded,
+                    color: enabled
+                        ? FlutterFlowTheme.of(context).secondaryText
+                        : FlutterFlowTheme.of(context).alternate,
+                    size: 24.0,
+                  ),
+                  incrementIconBuilder: (enabled) => Icon(
+                    Icons.add_rounded,
+                    color: enabled
+                        ? FlutterFlowTheme.of(context).primary
+                        : FlutterFlowTheme.of(context).alternate,
+                    size: 24.0,
+                  ),
+                  countBuilder: (count) => Text(
+                    count.toString(),
+                    style: FlutterFlowTheme.of(context).titleLarge.override(
+                          fontFamily: 'Roboto Mono',
+                          fontSize: 20.0,
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  count: _model.countControllerValue ??= widget!.quantity!,
+                  updateCount: (count) async {
+                    safeSetState(() => _model.countControllerValue = count);
+                    logFirebaseEvent(
+                        'CART_ITEM_CountController_e57xf7em_ON_FO');
+                    logFirebaseEvent('CountController_backend_call');
+                    await CartsTable().update(
+                      data: {
+                        'quantity': _model.countControllerValue,
+                      },
+                      matchingRows: (rows) => rows
+                          .eqOrNull(
+                            'user_id',
+                            currentUserUid,
+                          )
+                          .eqOrNull(
+                            'product_id',
+                            widget!.productId,
+                          ),
+                    );
+                    if (widget!.quantity == 0) {
+                      logFirebaseEvent('CountController_backend_call');
+                      await CartsTable().delete(
+                        matchingRows: (rows) => rows
+                            .eqOrNull(
+                              'user_id',
+                              currentUserUid,
+                            )
+                            .eqOrNull(
+                              'product_id',
+                              widget!.productId,
+                            ),
+                      );
+                    }
+                  },
+                  stepSize: 1,
+                ),
+              ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                 child: Column(
@@ -138,23 +212,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                4.0, 4.0, 0.0, 0.0),
-                            child: Text(
-                              valueOrDefault<String>(
-                                widget!.quantity?.toString(),
-                                '0',
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineSmall
-                                  .override(
-                                    fontFamily: 'Roboto Mono',
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 0.0, 10.0, 0.0),
+                                0.0, 0.0, 10.0, 0.0),
                             child: Text(
                               'for',
                               style: FlutterFlowTheme.of(context)

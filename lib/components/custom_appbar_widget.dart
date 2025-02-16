@@ -13,16 +13,17 @@ export 'custom_appbar_model.dart';
 class CustomAppbarWidget extends StatefulWidget {
   const CustomAppbarWidget({
     super.key,
-    required this.backButton,
+    bool? backButton,
     bool? actionButton,
     this.actionButtonText,
     this.actionButtonAction,
     bool? optionsButton,
     required this.optionsButtonAction,
-  })  : this.actionButton = actionButton ?? false,
+  })  : this.backButton = backButton ?? true,
+        this.actionButton = actionButton ?? false,
         this.optionsButton = optionsButton ?? false;
 
-  final bool? backButton;
+  final bool backButton;
   final bool actionButton;
   final String? actionButtonText;
   final Future Function()? actionButtonAction;
@@ -63,7 +64,7 @@ class _CustomAppbarWidgetState extends State<CustomAppbarWidget> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (widget!.backButton ?? true)
+        if (widget!.backButton)
           FlutterFlowIconButton(
             borderColor: FlutterFlowTheme.of(context).secondaryBackground,
             borderRadius: 24.0,
