@@ -1,5 +1,7 @@
 # Lemon
 
+A TreeHacks 2025 project.
+
 ## Inspiration
 Reducing food waste is one of the most effective ways to combat climate change. In fact, food waste has an environmental footprint 248x bigger than plastic.  🌍
 As we did research and analyzed the root causes of food waste, we found out that more than 1.2 billion tonnes of fruit and veg are lost in farms, even before they reach the markets. But why?
