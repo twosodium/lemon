@@ -18,11 +18,11 @@ export 'product_details_model.dart';
 class ProductDetailsWidget extends StatefulWidget {
   const ProductDetailsWidget({
     super.key,
-    required this.productName,
-    required this.farmerIntro,
-    required this.productPrice,
-    required this.farmerId,
-    required this.productImage,
+    this.productName,
+    this.farmerIntro,
+    this.productPrice,
+    this.farmerId,
+    this.productImage,
     this.productId,
   });
 
@@ -104,7 +104,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                 child: CustomAppbarWidget(
                                   backButton: true,
                                   actionButton: false,
-                                  optionsButton: true,
+                                  optionsButton: false,
                                   actionButtonAction: () async {},
                                   optionsButtonAction: () async {},
                                 ),
@@ -134,8 +134,8 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                 borderRadius: BorderRadius.circular(8.0),
                                 child: Image.network(
                                   widget!.productImage!,
-                                  width: 200.0,
-                                  height: 200.0,
+                                  width: 100.0,
+                                  height: 100.0,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -237,6 +237,24 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  30.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                '${formatNumber(
+                                  widget!.productPrice,
+                                  formatType: FormatType.decimal,
+                                  decimalType: DecimalType.periodDecimal,
+                                  currency: '\$',
+                                )} /kg',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Roboto Mono',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ),
                             Align(
                               alignment: AlignmentDirectional(1.0, 0.0),
                               child: Builder(
@@ -313,7 +331,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 0.0, 20.0),
+                              25.0, 20.0, 0.0, 20.0),
                           child: FutureBuilder<List<ProductsRow>>(
                             future: ProductsTable().queryRows(
                               queryFn: (q) => q.eqOrNull(
@@ -417,10 +435,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               25.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            valueOrDefault<String>(
-                              widget!.farmerIntro,
-                              'farmer intro',
-                            ),
+                            widget!.farmerIntro!,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

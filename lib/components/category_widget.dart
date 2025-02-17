@@ -11,11 +11,9 @@ class CategoryWidget extends StatefulWidget {
   const CategoryWidget({
     super.key,
     this.categoryName,
-    this.categoryImage,
   });
 
   final String? categoryName;
-  final String? categoryImage;
 
   @override
   State<CategoryWidget> createState() => _CategoryWidgetState();
@@ -54,7 +52,6 @@ class _CategoryWidgetState extends State<CategoryWidget> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
-        height: 60.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(12.0),

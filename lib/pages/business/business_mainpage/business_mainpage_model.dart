@@ -27,7 +27,6 @@ class BusinessMainpageModel extends FlutterFlowModel<BusinessMainpageWidget> {
       choiceChipsValueController?.value?.firstOrNull;
   set choiceChipsValue(String? val) =>
       choiceChipsValueController?.value = val != null ? [val] : [];
-  Stream<List<ProductsRow>>? gridViewSupabaseStream;
   // Stores action output result for [Backend Call - Query Rows] action in product widget.
   List<UsersRow>? farmerInfo;
 

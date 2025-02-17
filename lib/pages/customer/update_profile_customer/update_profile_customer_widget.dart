@@ -2,12 +2,9 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/custom_appbar_widget.dart';
 import '/componentsdefault/title_with_subtitle/title_with_subtitle_widget.dart';
-import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/place.dart';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -291,57 +288,10 @@ class _UpdateProfileCustomerWidgetState
                                     .emailentryTextControllerValidator
                                     .asValidator(context),
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 15.0, 0.0, 0.0),
-                                child: Text(
-                                  'Whare are you based in?',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Roboto Mono',
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                    child: FlutterFlowPlacePicker(
-                      iOSGoogleMapsApiKey: '',
-                      androidGoogleMapsApiKey: '',
-                      webGoogleMapsApiKey: '',
-                      onSelect: (place) async {
-                        safeSetState(() => _model.placePickerValue = place);
-                      },
-                      defaultText: 'Select Location',
-                      icon: Icon(
-                        Icons.place,
-                        color: FlutterFlowTheme.of(context).info,
-                        size: 16.0,
-                      ),
-                      buttonOptions: FFButtonOptions(
-                        width: 200.0,
-                        height: 40.0,
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Roboto Mono',
-                                  color: FlutterFlowTheme.of(context).info,
-                                  letterSpacing: 0.0,
-                                ),
-                        elevation: 0.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
                     ),
                   ),
                   Padding(
@@ -356,16 +306,12 @@ class _UpdateProfileCustomerWidgetState
                           data: {
                             'fullname': _model.fullNameTextController.text,
                             'email': _model.emailentryTextController.text,
-                            'location': _model.placePickerValue.city,
                           },
                           matchingRows: (rows) => rows.eqOrNull(
                             'id',
                             currentUserUid,
                           ),
                         );
-                        logFirebaseEvent('Button_update_app_state');
-                        FFAppState().userLoc = _model.placePickerValue.city;
-                        safeSetState(() {});
                         logFirebaseEvent('Button_navigate_to');
 
                         context.pushNamed('UpdateProfile_customer');
@@ -438,8 +384,7 @@ class _UpdateProfileCustomerWidgetState
                         textStyle:
                             FlutterFlowTheme.of(context).bodyMedium.override(
                                   fontFamily: 'Roboto Mono',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
+                                  color: Colors.white,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),

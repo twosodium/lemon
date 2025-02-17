@@ -583,6 +583,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                               'email': _model.nameTextController.text,
                               'id': currentUserUid,
                               'fullname': _model.nameTextController.text,
+                              'intro': ' ',
+                              'location': '',
                             });
                             logFirebaseEvent('Button_update_app_state');
                             FFAppState().accountType =

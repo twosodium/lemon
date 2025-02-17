@@ -127,60 +127,49 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   ),
                 ),
               ),
-              Container(
-                width: 70.0,
-                height: 40.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(8.0),
-                  shape: BoxShape.rectangle,
-                ),
-                child: FlutterFlowCountController(
-                  decrementIconBuilder: (enabled) => Icon(
-                    Icons.remove_rounded,
-                    color: enabled
-                        ? FlutterFlowTheme.of(context).secondaryText
-                        : FlutterFlowTheme.of(context).alternate,
-                    size: 24.0,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 0.0),
+                child: Container(
+                  width: 70.0,
+                  height: 40.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    borderRadius: BorderRadius.circular(8.0),
+                    shape: BoxShape.rectangle,
                   ),
-                  incrementIconBuilder: (enabled) => Icon(
-                    Icons.add_rounded,
-                    color: enabled
-                        ? FlutterFlowTheme.of(context).primary
-                        : FlutterFlowTheme.of(context).alternate,
-                    size: 24.0,
-                  ),
-                  countBuilder: (count) => Text(
-                    count.toString(),
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Roboto Mono',
-                          fontSize: 20.0,
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  count: _model.countControllerValue ??= widget!.quantity!,
-                  updateCount: (count) async {
-                    safeSetState(() => _model.countControllerValue = count);
-                    logFirebaseEvent(
-                        'CART_ITEM_CountController_e57xf7em_ON_FO');
-                    logFirebaseEvent('CountController_backend_call');
-                    await CartsTable().update(
-                      data: {
-                        'quantity': _model.countControllerValue,
-                      },
-                      matchingRows: (rows) => rows
-                          .eqOrNull(
-                            'user_id',
-                            currentUserUid,
-                          )
-                          .eqOrNull(
-                            'product_id',
-                            widget!.productId,
+                  child: FlutterFlowCountController(
+                    decrementIconBuilder: (enabled) => Icon(
+                      Icons.remove_rounded,
+                      color: enabled
+                          ? FlutterFlowTheme.of(context).secondaryText
+                          : FlutterFlowTheme.of(context).alternate,
+                      size: 24.0,
+                    ),
+                    incrementIconBuilder: (enabled) => Icon(
+                      Icons.add_rounded,
+                      color: enabled
+                          ? FlutterFlowTheme.of(context).primary
+                          : FlutterFlowTheme.of(context).alternate,
+                      size: 24.0,
+                    ),
+                    countBuilder: (count) => Text(
+                      count.toString(),
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Roboto Mono',
+                            fontSize: 20.0,
+                            letterSpacing: 0.0,
                           ),
-                    );
-                    if (widget!.quantity == 0) {
+                    ),
+                    count: _model.countControllerValue ??= widget!.quantity!,
+                    updateCount: (count) async {
+                      safeSetState(() => _model.countControllerValue = count);
+                      logFirebaseEvent(
+                          'CART_ITEM_CountController_e57xf7em_ON_FO');
                       logFirebaseEvent('CountController_backend_call');
-                      await CartsTable().delete(
+                      await CartsTable().update(
+                        data: {
+                          'quantity': _model.countControllerValue,
+                        },
                         matchingRows: (rows) => rows
                             .eqOrNull(
                               'user_id',
@@ -191,9 +180,32 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                               widget!.productId,
                             ),
                       );
-                    }
-                  },
-                  stepSize: 1,
+                      logFirebaseEvent('CountController_navigate_to');
+
+                      context.pushNamed('cart');
+
+                      if (_model.countControllerValue! <= 0) {
+                        logFirebaseEvent('CountController_backend_call');
+                        await CartsTable().delete(
+                          matchingRows: (rows) => rows
+                              .eqOrNull(
+                                'user_id',
+                                currentUserUid,
+                              )
+                              .eqOrNull(
+                                'product_id',
+                                widget!.productId,
+                              ),
+                        );
+                        logFirebaseEvent('CountController_navigate_to');
+
+                        context.pushNamed('cart');
+                      }
+                    },
+                    stepSize: 1,
+                    contentPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 0.0),
+                  ),
                 ),
               ),
               Padding(
@@ -212,13 +224,14 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 10.0, 0.0),
+                                10.0, 0.0, 5.0, 0.0),
                             child: Text(
-                              'for',
+                              'kg for',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Roboto Mono',
+                                    fontSize: 10.0,
                                     letterSpacing: 0.0,
                                   ),
                             ),

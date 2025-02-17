@@ -100,7 +100,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                             borderRadius: BorderRadius.circular(0.0),
                             child: Image.network(
                               'https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?q=80&w=3027&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                              width: 397.23,
+                              width: double.infinity,
                               height: 200.0,
                               fit: BoxFit.cover,
                             ),
@@ -156,7 +156,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                                             random_data.randomInteger(
                                                 0, _model.facts!.length))
                                         ?.fact,
-                                    '1.2 billion tonnes of fruit and veg are lost in farms.',
+                                    'Farms discard 1.2 billion tons of fruit annually',
                                   ),
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
@@ -284,7 +284,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                                         ParamType.String,
                                       ),
                                       'productImage': serializeParam(
-                                        '',
+                                        gridViewProductsRow.image,
                                         ParamType.String,
                                       ),
                                       'productPrice': serializeParam(
@@ -311,6 +311,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                                   productPrice: gridViewProductsRow.price!,
                                   productImage: gridViewProductsRow.image,
                                   productId: gridViewProductsRow.id,
+                                  producerName: gridViewProductsRow.name,
                                 ),
                               );
                             },
@@ -420,7 +421,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                                         ParamType.String,
                                       ),
                                       'productImage': serializeParam(
-                                        '',
+                                        gridViewProductsRow.image,
                                         ParamType.String,
                                       ),
                                       'productPrice': serializeParam(
@@ -430,6 +431,10 @@ class _PublicWidgetState extends State<PublicWidget> {
                                       'farmerId': serializeParam(
                                         gridViewProductsRow.sellerId,
                                         ParamType.String,
+                                      ),
+                                      'productId': serializeParam(
+                                        gridViewProductsRow.id,
+                                        ParamType.int,
                                       ),
                                     }.withoutNulls,
                                   );
@@ -443,6 +448,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                                   productPrice: gridViewProductsRow.price!,
                                   productImage: gridViewProductsRow.image,
                                   productId: gridViewProductsRow.id,
+                                  producerName: '',
                                 ),
                               );
                             },
@@ -474,7 +480,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 10.0, 10.0),
                     child: Text(
-                      'Business Spotlight:${_model.businessAround?.elementAtOrNull(random_data.randomInteger(0, _model.businessAround!.length))?.fullname}uses Lemon to collaborate with farmers on Lemon to source its fruits and veggies locally and sustainably.',
+                      'Business Spotlight: ${_model.businessAround?.elementAtOrNull(random_data.randomInteger(0, _model.businessAround!.length))?.fullname} uses Lemon to collaborate with farmers on Lemon to source its fruits and veggies locally and sustainably.',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Roboto Mono',
                             letterSpacing: 0.0,
@@ -499,7 +505,7 @@ class _PublicWidgetState extends State<PublicWidget> {
                           ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(14.0),
+                      padding: EdgeInsets.all(16.0),
                       child: FutureBuilder<List<CategoryListRow>>(
                         future: CategoryListTable().queryRows(
                           queryFn: (q) => q,
@@ -565,8 +571,6 @@ class _PublicWidgetState extends State<PublicWidget> {
                                       'Keywsz_${gridViewIndex}_of_${gridViewCategoryListRowList.length}'),
                                   categoryName:
                                       gridViewCategoryListRow.category,
-                                  categoryImage: gridViewCategoryListRow.images
-                                      ?.toString(),
                                 ),
                               );
                             },

@@ -2,12 +2,9 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/custom_appbar_widget.dart';
 import '/componentsdefault/title_with_subtitle/title_with_subtitle_widget.dart';
-import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/place.dart';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -302,58 +299,6 @@ class _UpdateProfileBusinessWidgetState
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 10.0, 0.0, 0.0),
-                                child: Text(
-                                  'Where are you based?',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Roboto Mono',
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 5.0, 0.0, 0.0),
-                                child: FlutterFlowPlacePicker(
-                                  iOSGoogleMapsApiKey: '',
-                                  androidGoogleMapsApiKey: '',
-                                  webGoogleMapsApiKey: '',
-                                  onSelect: (place) async {
-                                    safeSetState(
-                                        () => _model.placePickerValue = place);
-                                  },
-                                  defaultText: 'Select Location',
-                                  icon: Icon(
-                                    Icons.place,
-                                    color: FlutterFlowTheme.of(context).info,
-                                    size: 16.0,
-                                  ),
-                                  buttonOptions: FFButtonOptions(
-                                    width: 200.0,
-                                    height: 40.0,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Roboto Mono',
-                                          color:
-                                              FlutterFlowTheme.of(context).info,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    elevation: 0.0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -459,7 +404,6 @@ class _UpdateProfileBusinessWidgetState
                           data: {
                             'intro': _model.introTextController.text,
                             'fullname': _model.fullNameTextController.text,
-                            'location': _model.placePickerValue.city,
                             'email': _model.emailentryTextController.text,
                           },
                           matchingRows: (rows) => rows,

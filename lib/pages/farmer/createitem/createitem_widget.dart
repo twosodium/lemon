@@ -85,8 +85,9 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                 ),
                 onPressed: () async {
                   logFirebaseEvent('CREATEITEM_PAGE_close_rounded_ICN_ON_TAP');
-                  logFirebaseEvent('IconButton_navigate_back');
-                  context.safePop();
+                  logFirebaseEvent('IconButton_navigate_to');
+
+                  context.pushNamed('farmer_mainpage');
                 },
               ),
             ),
@@ -309,7 +310,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                 .labelMedium
                                                 .override(
                                                   fontFamily: 'Roboto Mono',
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
@@ -426,7 +427,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                 .labelMedium
                                                 .override(
                                                   fontFamily: 'Roboto Mono',
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
@@ -528,6 +529,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               .labelLarge
                                               .override(
                                                 fontFamily: 'Roboto Mono',
+                                                fontSize: 14.0,
                                                 letterSpacing: 0.0,
                                               ),
                                           maxLines: 9,
@@ -558,7 +560,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Roboto Mono',
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
@@ -655,7 +657,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Roboto Mono',
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
@@ -720,14 +722,14 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Sale Price',
+                                                    'Sale Price /kg',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelMedium
                                                         .override(
                                                           fontFamily:
                                                               'Roboto Mono',
-                                                          color: Colors.black,
+                                                          color: Colors.white,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -917,7 +919,7 @@ class _CreateitemWidgetState extends State<CreateitemWidget> {
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Roboto Mono',
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),

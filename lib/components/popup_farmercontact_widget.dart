@@ -132,15 +132,18 @@ class _PopupFarmercontactWidgetState extends State<PopupFarmercontactWidget>
                   ),
                 ),
               ),
-              Text(
-                'Meet...',
-                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      fontFamily: 'Roboto Mono',
-                      letterSpacing: 0.0,
-                    ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                child: Text(
+                  'Meet...',
+                  style: FlutterFlowTheme.of(context).headlineSmall.override(
+                        fontFamily: 'Roboto Mono',
+                        letterSpacing: 0.0,
+                      ),
+                ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 4.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
                   'Farmer',
                   style: FlutterFlowTheme.of(context).labelSmall.override(
@@ -149,31 +152,58 @@ class _PopupFarmercontactWidgetState extends State<PopupFarmercontactWidget>
                       ),
                 ),
               ),
-              Text(
-                valueOrDefault<String>(
-                  widget!.farmerName,
-                  '{Name}',
-                ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Roboto Mono',
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                    child: Text(
-                      valueOrDefault<String>(
-                        widget!.farmerIntro,
-                        '{intro}',
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+                child: Text(
+                  valueOrDefault<String>(
+                    widget!.farmerName,
+                    '{Name}',
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Roboto Mono',
+                        letterSpacing: 0.0,
                       ),
-                      style: FlutterFlowTheme.of(context).labelSmall.override(
-                            fontFamily: 'Roboto Mono',
-                            letterSpacing: 0.0,
+                ),
+              ),
+              Wrap(
+                spacing: 0.0,
+                runSpacing: 0.0,
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                direction: Axis.vertical,
+                runAlignment: WrapAlignment.start,
+                verticalDirection: VerticalDirection.down,
+                clipBehavior: Clip.none,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width * 0.8,
+                          height: 100.0,
+                          decoration: BoxDecoration(),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 4.0, 0.0, 0.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                widget!.farmerIntro,
+                                '{intro}',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .labelSmall
+                                  .override(
+                                    fontFamily: 'Roboto Mono',
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
                           ),
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

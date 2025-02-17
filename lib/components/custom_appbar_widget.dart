@@ -18,7 +18,7 @@ class CustomAppbarWidget extends StatefulWidget {
     this.actionButtonText,
     this.actionButtonAction,
     bool? optionsButton,
-    required this.optionsButtonAction,
+    this.optionsButtonAction,
   })  : this.backButton = backButton ?? true,
         this.actionButton = actionButton ?? false,
         this.optionsButton = optionsButton ?? false;

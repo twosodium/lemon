@@ -124,49 +124,44 @@ class _ProductWidgetState extends State<ProductWidget> {
                             letterSpacing: 0.0,
                           ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 10.0, 30.0),
-                          child: Text(
-                            valueOrDefault<String>(
-                              formatNumber(
-                                widget!.productPrice,
-                                formatType: FormatType.decimal,
-                                decimalType: DecimalType.periodDecimal,
-                                currency: '\$',
-                              ),
-                              '0',
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                      child: Text(
+                        '${formatNumber(
+                          widget!.productPrice,
+                          formatType: FormatType.decimal,
+                          decimalType: DecimalType.periodDecimal,
+                          currency: '\$',
+                        )} /kg',
+                        style:
+                            FlutterFlowTheme.of(context).titleMedium.override(
                                   fontFamily: 'Roboto Mono',
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 12.0,
                                   letterSpacing: 0.0,
                                 ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 40.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                5.0, 0.0, 5.0, 0.0),
+                            child: Icon(
+                              Icons.shopping_cart,
+                              color: FlutterFlowTheme.of(context).primary,
+                              size: 15.0,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 0.0, 30.0),
-                          child: Icon(
-                            Icons.shopping_cart,
-                            color: FlutterFlowTheme.of(context).primary,
-                            size: 24.0,
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Builder(
-                            builder: (context) => Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 30.0, 30.0),
-                              child: FlutterFlowIconButton(
+                          Align(
+                            alignment: AlignmentDirectional(0.0, -1.0),
+                            child: Builder(
+                              builder: (context) => FlutterFlowIconButton(
                                 borderRadius: 8.0,
                                 buttonSize: 30.0,
                                 fillColor: FlutterFlowTheme.of(context).primary,
@@ -216,8 +211,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ].divide(SizedBox(height: 8.0)),
                 ),

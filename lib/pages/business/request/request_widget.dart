@@ -3,13 +3,10 @@ import '/components/popup_farmercontact_widget.dart';
 import '/flutter_flow/flutter_flow_count_controller.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/place.dart';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -78,8 +75,9 @@ class _RequestWidgetState extends State<RequestWidget> {
                 ),
                 onPressed: () async {
                   logFirebaseEvent('REQUEST_PAGE_close_rounded_ICN_ON_TAP');
-                  logFirebaseEvent('IconButton_navigate_back');
-                  context.safePop();
+                  logFirebaseEvent('IconButton_navigate_to');
+
+                  context.pushNamed('business_mainpage');
                 },
               ),
             ),
@@ -146,40 +144,69 @@ class _RequestWidgetState extends State<RequestWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                   ),
-                                  FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController ??=
-                                            FormFieldController<String>(null),
-                                    options: ['Apple', 'Tomato', 'Potato'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.dropDownValue = val),
-                                    width: 200.0,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Roboto Mono',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    hintText: 'Select...',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                                  FutureBuilder<List<CategoryListRow>>(
+                                    future: CategoryListTable().queryRows(
+                                      queryFn: (q) => q,
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor: Colors.transparent,
-                                    borderWidth: 0.0,
-                                    borderRadius: 8.0,
-                                    margin: EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 0.0, 12.0, 0.0),
-                                    hidesUnderline: true,
-                                    isOverButton: false,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 25.0,
+                                            height: 25.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<CategoryListRow>
+                                          dropDownCategoryListRowList =
+                                          snapshot.data!;
+
+                                      return FlutterFlowDropDown<String>(
+                                        controller: _model
+                                                .dropDownValueController ??=
+                                            FormFieldController<String>(null),
+                                        options: dropDownCategoryListRowList
+                                            .map((e) => e.category)
+                                            .toList(),
+                                        onChanged: (val) => safeSetState(
+                                            () => _model.dropDownValue = val),
+                                        width: 200.0,
+                                        height: 40.0,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Roboto Mono',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: 'Select...',
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        elevation: 2.0,
+                                        borderColor: Colors.transparent,
+                                        borderWidth: 0.0,
+                                        borderRadius: 8.0,
+                                        margin: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 12.0, 0.0),
+                                        hidesUnderline: true,
+                                        isOverButton: false,
+                                        isSearchable: false,
+                                        isMultiSelect: false,
+                                      );
+                                    },
                                   ),
                                   Text(
                                     'Amount',
@@ -234,41 +261,6 @@ class _RequestWidgetState extends State<RequestWidget> {
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 0.0, 12.0, 0.0),
-                                    ),
-                                  ),
-                                  FlutterFlowPlacePicker(
-                                    iOSGoogleMapsApiKey: '',
-                                    androidGoogleMapsApiKey: '',
-                                    webGoogleMapsApiKey: '',
-                                    onSelect: (place) async {
-                                      safeSetState(() =>
-                                          _model.placePickerValue = place);
-                                    },
-                                    defaultText: 'Select Location',
-                                    icon: Icon(
-                                      Icons.place,
-                                      color: FlutterFlowTheme.of(context).info,
-                                      size: 16.0,
-                                    ),
-                                    buttonOptions: FFButtonOptions(
-                                      width: 200.0,
-                                      height: 40.0,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Roboto Mono',
-                                            color: FlutterFlowTheme.of(context)
-                                                .info,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      elevation: 0.0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   TextFormField(
@@ -509,20 +501,21 @@ class _RequestWidgetState extends State<RequestWidget> {
                           logFirebaseEvent(
                               'REQUEST_PAGE_FIND_A_PRODUCER_BTN_ON_TAP');
                           logFirebaseEvent('Button_backend_call');
-                          _model.farmers = await UsersTable().queryRows(
-                            queryFn: (q) => q
-                                .eqOrNull(
-                                  'account-type',
-                                  'Producer',
-                                )
-                                .eqOrNull(
-                                  'location',
-                                  _model.placePickerValue.city,
-                                )
-                                .containsOrNull(
-                                  'produce',
-                                  '{${_model.dropDownValue}}',
-                                ),
+                          _model.productsOfValidCategory =
+                              await ProductsTable().queryRows(
+                            queryFn: (q) => q.eqOrNull(
+                              'category',
+                              _model.dropDownValue,
+                            ),
+                          );
+                          logFirebaseEvent('Button_backend_call');
+                          _model.obtainValidFarmer =
+                              await UsersTable().queryRows(
+                            queryFn: (q) => q.eqOrNull(
+                              'id',
+                              _model.productsOfValidCategory?.firstOrNull
+                                  ?.sellerId,
+                            ),
                           );
                           logFirebaseEvent('Button_alert_dialog');
                           await showDialog(
@@ -541,12 +534,12 @@ class _RequestWidgetState extends State<RequestWidget> {
                                         ?.unfocus();
                                   },
                                   child: PopupFarmercontactWidget(
-                                    farmerName:
-                                        _model.farmers!.firstOrNull!.fullname!,
-                                    farmerIntro:
-                                        _model.farmers!.firstOrNull!.intro!,
-                                    farmerContact:
-                                        _model.farmers!.firstOrNull!.email!,
+                                    farmerName: _model.obtainValidFarmer!
+                                        .firstOrNull!.fullname!,
+                                    farmerIntro: _model
+                                        .obtainValidFarmer!.firstOrNull!.intro!,
+                                    farmerContact: _model
+                                        .obtainValidFarmer!.firstOrNull!.email!,
                                   ),
                                 ),
                               );

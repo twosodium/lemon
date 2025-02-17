@@ -78,7 +78,7 @@ class _NavbarWidgetState extends State<NavbarWidget> {
               } else {
                 logFirebaseEvent('businessLogo_navigate_to');
 
-                context.pushNamed('SignUp');
+                context.pushNamed('public');
               }
             },
             child: ClipRRect(

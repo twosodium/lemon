@@ -66,13 +66,14 @@ class _BusinessMainpageWidgetState extends State<BusinessMainpageWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0.0, -1.0),
                 child: Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(24.0, 70.0, 24.0, 24.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
                     children: [
                       FFButtonWidget(
                         onPressed: () async {
@@ -106,7 +107,7 @@ class _BusinessMainpageWidgetState extends State<BusinessMainpageWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 24.0, 0.0),
+                                0.0, 20.0, 24.0, 0.0),
                             child: Text(
                               'Categories',
                               style: FlutterFlowTheme.of(context)
@@ -207,18 +208,13 @@ class _BusinessMainpageWidgetState extends State<BusinessMainpageWidget> {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
-                            child: StreamBuilder<List<ProductsRow>>(
-                              stream: _model.gridViewSupabaseStream ??= SupaFlow
-                                  .client
-                                  .from("products")
-                                  .stream(primaryKey: ['id'])
-                                  .eqOrNull(
-                                    'category',
-                                    _model.category,
-                                  )
-                                  .map((list) => list
-                                      .map((item) => ProductsRow(item))
-                                      .toList()),
+                            child: FutureBuilder<List<ProductsRow>>(
+                              future: ProductsTable().queryRows(
+                                queryFn: (q) => q.eqOrNull(
+                                  'category',
+                                  _model.choiceChipsValue,
+                                ),
+                              ),
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
@@ -327,7 +323,7 @@ class _BusinessMainpageWidgetState extends State<BusinessMainpageWidget> {
                           ),
                         ].divide(SizedBox(height: 16.0)),
                       ),
-                    ].divide(SizedBox(height: 24.0)),
+                    ],
                   ),
                 ),
               ),

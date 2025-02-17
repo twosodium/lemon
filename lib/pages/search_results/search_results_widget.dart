@@ -240,11 +240,11 @@ class _SearchResultsWidgetState extends State<SearchResultsWidget> {
                                           ParamType.String,
                                         ),
                                         'productImage': serializeParam(
-                                          '',
+                                          gridViewProductsRow.image,
                                           ParamType.String,
                                         ),
                                         'productId': serializeParam(
-                                          0,
+                                          gridViewProductsRow.id,
                                           ParamType.int,
                                         ),
                                       }.withoutNulls,

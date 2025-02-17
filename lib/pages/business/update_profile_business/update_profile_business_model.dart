@@ -2,12 +2,9 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/custom_appbar_widget.dart';
 import '/componentsdefault/title_with_subtitle/title_with_subtitle_widget.dart';
-import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/place.dart';
-import 'dart:io';
 import 'dart:ui';
 import 'update_profile_business_widget.dart' show UpdateProfileBusinessWidget;
 import 'package:flutter/material.dart';
@@ -37,8 +34,6 @@ class UpdateProfileBusinessModel
   FocusNode? emailentryFocusNode;
   TextEditingController? emailentryTextController;
   String? Function(BuildContext, String?)? emailentryTextControllerValidator;
-  // State field(s) for PlacePicker widget.
-  FFPlace placePickerValue = FFPlace();
   // State field(s) for intro widget.
   FocusNode? introFocusNode;
   TextEditingController? introTextController;

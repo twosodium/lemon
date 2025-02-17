@@ -3,13 +3,10 @@ import '/components/popup_farmercontact_widget.dart';
 import '/flutter_flow/flutter_flow_count_controller.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/place.dart';
-import 'dart:io';
 import 'dart:ui';
 import 'request_widget.dart' show RequestWidget;
 import 'package:flutter/foundation.dart';
@@ -26,15 +23,15 @@ class RequestModel extends FlutterFlowModel<RequestWidget> {
   FormFieldController<String>? dropDownValueController;
   // State field(s) for CountController widget.
   int? countControllerValue;
-  // State field(s) for PlacePicker widget.
-  FFPlace placePickerValue = FFPlace();
   // State field(s) for description widget.
   FocusNode? descriptionFocusNode;
   TextEditingController? descriptionTextController;
   String? Function(BuildContext, String?)? descriptionTextControllerValidator;
   DateTime? datePicked;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
-  List<UsersRow>? farmers;
+  List<ProductsRow>? productsOfValidCategory;
+  // Stores action output result for [Backend Call - Query Rows] action in Button widget.
+  List<UsersRow>? obtainValidFarmer;
 
   @override
   void initState(BuildContext context) {}
